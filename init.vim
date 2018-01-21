@@ -7,6 +7,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-repeat'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'AndrewRadev/switch.vim'
@@ -16,21 +17,44 @@ Plugin 'kana/vim-textobj-user'
     Plugin 'kana/vim-textobj-entire'
     Plugin 'kana/vim-textobj-line'
     Plugin 'tkhren/vim-textobj-numeral'
+    " Plugin 'haya14busa/vim-textobj-number'
     Plugin 'lucapette/vim-textobj-underscore'
     Plugin 'Julian/vim-textobj-variable-segment'
     Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'tommcdo/vim-express'
 Plugin 'ervandew/supertab'
 Plugin 'haya14busa/vim-easyoperator-line'
 Plugin 'neomake/neomake'
+Plugin 'bronson/vim-visual-star-search'
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'zchee/deoplete-jedi'
+Plugin 'zchee/deoplete-clang'
+" Plugin 'tweekmonster/deoplete-clang2'
+Plugin 'Shougo/echodoc.vim'
+Plugin 'tweekmonster/startuptime.vim'
+
 " Plugin 'vim-syntastic/syntastic'
 call vundle#end()            " required
 filetype plugin indent on    " required
-syntax on
+" syntax on
 " :PluginList       - lists configured plugins
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
+let g:deoplete#enable_at_startup = 1
+let g:python3_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
+let g:deoplete#sources#jedi#python_path = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
+let g:deoplete#sources#jedi#extra_path = '/afs/cern.ch/user/n/nscharmb/private/python'
+let g:deoplete#sources#jedi#server_timeout = 120
+let g:deoplete#sources#clang#libclang_path = ''
+let g:deoplete#auto_completion_start_length = 2
+let g:echodoc#enable_at_startup = 1
+set noshowmode
 
+" let g:deoplete#disable_auto_complete = 1
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" call deoplete#custom#set('jedi', 'debug_enabled', 1)
+" call deoplete#enable_logging('DEBUG', '/tmp/deoplete.log')
 """""""""""""""""""""""""
 "   
 "   General settings
@@ -63,6 +87,8 @@ set magic
 command CV execute "echo serverlist()"
 set complete+=kspell
 autocmd FileType tex setlocal spell
+set wildmenu
+set wildmode=list:longest,full
 
 
 
@@ -72,6 +98,7 @@ autocmd FileType tex setlocal spell
 "
 """""""""""""""""""""""""
 autocmd FileType cpp setlocal commentstring=//\ %s
+autocmd FileType text setlocal commentstring=#\ %s
 " Use spaces instead of tabs
 set expandtab
 " Be smart when using tabs ;)
@@ -210,3 +237,21 @@ let g:switch_custom_definitions =
     \   ['height', 'width'],
     \   ['before', 'after'],
     \ ]
+
+
+"""""""""""""""""""
+"   textobj-numeral
+"""""""""""""""""""
+
+set nrformats-=octal
+
+function! Increment(motion, step)
+    let inc_key = a:step > 0 ? "\<C-a>" : "\<C-x>"
+    let @z = '"zyad' . a:motion . 'vad"zp'. abs(a:step) . inc_key
+    return '@z'
+endfunction
+
+nmap <expr> + Increment('j', 1)
+nmap <expr> - Increment('j', -1)
+nmap <expr> ) Increment('gNd', 1)
+nmap <expr> ( Increment('gNd', -1)
