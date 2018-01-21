@@ -1,0 +1,17 @@
+- defaults:
+    link:
+      relink: true
+
+- shell: 
+        - mkdir -p ~/.config/nvim
+        - git clone https://github.com/VundleVim/Vuindle.vim.git ~/.config/nvim/bundle/Vuindle.vim || true
+        - cd  ~/.config/nvim/bundle/Vuindle.vim
+        - cd  ~/.config/nvim/bundle/Vuindle.vim; git pull
+- clean: ['~']
+
+- link:
+        # ~/.dotfiles: ''
+    ~/.config/nvim/init.vim: init.vim
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
