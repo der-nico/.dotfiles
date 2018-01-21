@@ -4,9 +4,9 @@
 
 - shell: 
         - mkdir -p ~/.config/nvim
-        - git clone https://github.com/VundleVim/Vuindle.vim.git ~/.config/nvim/bundle/Vuindle.vim || true
-        - cd  ~/.config/nvim/bundle/Vuindle.vim
-        - cd  ~/.config/nvim/bundle/Vuindle.vim; git pull
+        - git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim || true
+        - cd  ~/.config/nvim/bundle/Vundle.vim
+        - cd  ~/.config/nvim/bundle/Vundle.vim; git pull
 - clean: ['~']
 
 - link:
