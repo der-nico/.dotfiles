@@ -17,7 +17,7 @@ Plugin 'kana/vim-textobj-user'
     Plugin 'kana/vim-textobj-entire'
     Plugin 'kana/vim-textobj-line'
     Plugin 'tkhren/vim-textobj-numeral'
-    " Plugin 'haya14busa/vim-textobj-number'
+    " Plugin 'haya3PATH=:vsbusa/vim-textobj-number'
     Plugin 'lucapette/vim-textobj-underscore'
     Plugin 'Julian/vim-textobj-variable-segment'
     Plugin 'michaeljsmith/vim-indent-object'
@@ -42,8 +42,10 @@ filetype plugin indent on    " required
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
 let g:deoplete#enable_at_startup = 1
-let g:python3_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
-let g:deoplete#sources#jedi#python_path = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
+let g:python3_host_prog = $ConndaPYTHON3PATH
+" let g:python3_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
+let g:deoplete#sources#jedi#python_path = $ConndaPYTHON3PATH
+" let g:deoplete#sources#jedi#python_path = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
 let g:deoplete#sources#jedi#extra_path = '/afs/cern.ch/user/n/nscharmb/private/python'
 let g:deoplete#sources#jedi#server_timeout = 120
 let g:deoplete#sources#clang#libclang_path = ''
