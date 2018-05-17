@@ -131,7 +131,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/afs/cern.ch/user/n/nscharmb/.oh-my-zsh
+  export ZSH=${HOME}/.oh-my-zsh
   ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -298,7 +298,7 @@ bindkey -M vicmd '^R' history-incremental-search-backward
 bindkey -M vicmd '^V' edit-command-line
 bindkey -M vicmd 'v' vi-cmd-mode
 bindkey jk vi-cmd-mode
-source /afs/cern.ch/user/n/nscharmb/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ${HOME}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
 export LS_COLORS
