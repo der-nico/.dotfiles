@@ -4,9 +4,11 @@
 
 - clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
 - shell:
-        - [git submodule update --init --recursive, Installing submodules]
-        - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
-        - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins forlders]
+        - git submodule update --init --recursive
+        - mkdir -p ~/.oh-my-zsh/custom/
+        - mkdir -p ~/.oh-my-zsh/custom/plugins
+        - mkdir -p ~/.oh-my-zsh/custom/themes
+        - mkdir -p ~/.oh-my-zsh/custom/themes/powerlevel9k
         - mkdir -p ~/.config/nvim
         - git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim || true
         - cd  ~/.config/nvim/bundle/Vundle.vim
@@ -19,7 +21,8 @@
     ~/.bash_profile: .bash_profile
     ~/.bashrc: .bashrc
     ~/.zshrc: .zshrc
-    ~/.oh-my-zsh: .oh-my-zsh
+    ~/.oh-my-zsh/custom/better_completion.zsh: .oh-my-zsh/custom/better_completion.zsh
+    ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme: .oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
 
 
 - shell:
