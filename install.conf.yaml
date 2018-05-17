@@ -2,12 +2,15 @@
     link:
       relink: true
 
+- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
 - shell:
+        - [git submodule update --init --recursive, Installing submodules]
+        - [mkdir -p ~/.oh-my-zsh/custom/, Creating oh-my-zsh custom forlders]
+        - [mkdir -p ~/.oh-my-zsh/custom/plugins, Creating oh-my-zsh custom plugins forlders]
         - mkdir -p ~/.config/nvim
         - git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim || true
         - cd  ~/.config/nvim/bundle/Vundle.vim
         - cd  ~/.config/nvim/bundle/Vundle.vim; git pull
-- clean: ['~']
 
 - link:
         # ~/.dotfiles: ''
