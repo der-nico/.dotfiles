@@ -13,6 +13,8 @@
         # ~/.dotfiles: ''
     ~/.config/nvim/init.vim: init.vim
     ~/.tmux.conf: tmux.conf
+    ~/.bash_profile: .bash_profile
+    ~/.bashrc: .bashrc
     ~/.zshrc: .zshrc
     ~/.oh-my-zsh: .oh-my-zsh
 
