@@ -43,6 +43,7 @@ filetype plugin indent on    " required
 
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = $ConndaPYTHON3PATH
+let g:python_host_prog = $ConndaPYTHON3PATH
 " let g:python3_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
 let g:deoplete#sources#jedi#python_path = $ConndaPYTHON3PATH
 " let g:deoplete#sources#jedi#python_path = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
