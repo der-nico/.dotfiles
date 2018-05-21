@@ -2,16 +2,26 @@
     link:
       relink: true
 
-- shell: 
+- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
+- shell:
+        - git submodule update --init --recursive
         - mkdir -p ~/.config/nvim
         - git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim || true
         - cd  ~/.config/nvim/bundle/Vundle.vim
         - cd  ~/.config/nvim/bundle/Vundle.vim; git pull
-- clean: ['~']
 
 - link:
         # ~/.dotfiles: ''
     ~/.config/nvim/init.vim: init.vim
+    ~/.tmux.conf: tmux.conf
+    ~/.bash_profile: .bash_profile
+    ~/.bashrc: .bashrc
+    ~/.zshrc: .zshrc
+    ~/zsh-syntax-highlighting: zsh-syntax-highlighting
+    ~/.oh-my-zsh: .oh-my-zsh
+    ~/.oh-my-zsh/custom/better_completion.zsh: .oh-my-zsh-custom/better_completion.zsh
+    ~/.oh-my-zsh/custom/themes/powerlevel9k: .oh-my-zsh-custom/themes/powerlevel9k
+
 
 - shell:
   - [git submodule update --init --recursive, Installing submodules]

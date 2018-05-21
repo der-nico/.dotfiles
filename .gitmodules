@@ -1,3 +1,12 @@
 [submodule "dotbot"]
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
+[submodule "zsh-syntax-highlighting"]
+	path = zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting
+[submodule "oh-my-zsh"]
+	path = .oh-my-zsh
+	url = https://github.com/robbyrussell/oh-my-zsh
+[submodule ".oh-my-zsh/custom/themes/powerlevel9k"]
+	path = .oh-my-zsh-custom/themes/powerlevel9k
+	url = https://github.com/bhilburn/powerlevel9k
