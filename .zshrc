@@ -137,12 +137,12 @@ POWERLEVEL9K_PYTHON_ICON=''
 POWERLEVEL9K_ANACONDA_BACKGROUND='black'
 POWERLEVEL9K_ANACONDA_FOREGROUND='cyan'
 # Advanced `vcs` color customization
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='blue'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='yellow'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='red'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
 
 # Advanced `vi_mode` color customization
 # Vi-Mode
@@ -216,6 +216,7 @@ source $ZSH/oh-my-zsh.sh
 
 if [ ${HOST:0:6} = "lxplus" ]; then
     export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
+    export PATH=$HOME/private/installed_software/git/bin/:$PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
     export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
@@ -331,7 +332,37 @@ zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 # autoload -Uz compinit
 # compinit
 
+function color_test {
+  #   Daniel Crisman's ANSI color chart script from
+  #   The Bash Prompt HOWTO: 6.1. Colours
+  #   http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+  #  
+  #   This function echoes a bunch of color codes to the 
+  #   terminal to demonstrate what's available.  Each 
+  #   line is the color code of one forground color,
+  #   out of 17 (default + 16 escapes), followed by a 
+  #   test use of that color on all nine background 
+  #   colors (default + 8 escapes).
+  #
 
+  T='gYw'   # The test text
+
+  echo -e "\n         def     40m     41m     42m     43m     44m     45m     46m     47m";
+
+  for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
+             '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
+             '  36m' '1;36m' '  37m' '1;37m';
+
+    do FG=${FGs// /}
+    echo -en " $FGs \033[$FG  $T  "
+    
+    for BG in 40m 41m 42m 43m 44m 45m 46m 47m;
+      do echo -en "$EINS \033[$FG\033[$BG  $T  \033[0m";
+    done
+    echo;
+  done
+  echo
+}
 # fzf + ag configuration
 if _has fzf && _has ag; then
   export FZF_DEFAULT_COMMAND='ag --path-to-ignore ~/.ignore --nocolor -g ""'
