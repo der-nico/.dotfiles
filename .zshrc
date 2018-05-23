@@ -27,7 +27,8 @@ export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
 export PATH="$HOME/neovim/bin:$PATH"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
 export PATH=$HOME/bin:$PATH
-export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
+export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
+export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
 # added by Anaconda3 4.3.0 installer
 #export PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/bin:$PATH"
 # alias vim="vimx"
