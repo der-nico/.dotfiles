@@ -25,6 +25,7 @@ function update-x11-forwarding
 # ZLE_RPROMPT_INDENT=-1
 if [ ${HOST:0:6} = "lxplus" ]; then
     export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
+    export PATH=$HOME/private/installed_software/git/bin/:$PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
     export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
@@ -165,7 +166,7 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv dir_writable os_icon)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable newline os_icon)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable vcs newline os_icon)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs command_execution_time status vi_mode)
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_PYTHON_ICON=''
@@ -244,6 +245,7 @@ plugins=(
     rake
     rbenv
     ruby
+    git
 )
 export KEYTIMEOUT=10
 source $ZSH/oh-my-zsh.sh
