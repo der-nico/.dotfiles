@@ -23,12 +23,7 @@ function update-x11-forwarding
       fi
     }
 # ZLE_RPROMPT_INDENT=-1
-export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
-export PATH="$HOME/neovim/bin:$PATH"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
 export PATH=$HOME/bin:$PATH
-export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
-export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
 # added by Anaconda3 4.3.0 installer
 #export PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/bin:$PATH"
 # alias vim="vimx"
@@ -42,25 +37,16 @@ alias realvim="\vim"
 alias vim="nvim"
 alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
-alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
-alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
-alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
-alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
-alias setupQC="source ~/private/tools/setup/SetupQC.sh"
 alias ag='ag --path-to-ignore ~/.ignore'
-alias cdeos="/eos/user/n/nscharmb/"
-alias cdwork="/afs/cern.ch/work/n/nscharmb/"
 function viag () { vim -c "Ack! $*" }
 alias vimag="viag"
 alias pe='~/go/bin/path-extractor'
-# alias pp="tmux capture-pane -S -3000 && tmux save-buffer ~/private/tmp/tmux-buffer && tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | pe | cut -d: -f1 | uniq | xargs ls -d 2>/dev/null | uniq | fzf --height 40%  | xargs echo -n | xclip -i -sel c -f"
+
 tmux_helper(){
  print -z vim $a
 }
 
-alias pp="tmux capture-pane -p -S -3000 > ~/private/tmp/tmux-buffer; tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >~/private/tmp/tmux-buffer ; cat -n ~/private/tmp/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > ~/private/tmp/tmux-buffer; cat ~/private/tmp/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
-# alias pp="tmux capture-pane -p -S -3000 > ~/private/tmp/tmux-buffer; tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >~/private/tmp/tmux-buffer ; cat -n ~/private/tmp/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > ~/private/tmp/tmux-buffer; cat ~/private/tmp/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n"
-# alias pp="tmux capture-pane -p -S -3000 > ~/private/tmp/tmux-buffer; tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >~/private/tmp/tmux-buffer ; cat -n ~/private/tmp/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > ~/private/tmp/tmux-buffer; cat ~/private/tmp/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | while read spo; do print -z vim $spo; done"
+alias pp="tmux capture-pane -p -S -3000 > $TMPDIR/tmux-buffer; tac $TMPDIR/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >$TMPDIR/tmux-buffer ; cat -n $TMPDIR/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > $TMPDIR/tmux-buffer; cat $TMPDIR/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
 
 scpo() {
     save_path="macbook:tmp/"
@@ -96,13 +82,13 @@ setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don\'t record an entry that was just recorded again.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don\'t record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don\'t write duplicate entries in the history file.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don\'t execute immediately upon history expansion.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 # Find all occurrences of the search query in the history file.
 #
 # (k) turns it an array of line numbers.
@@ -132,8 +118,9 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=${HOME}/.oh-my-zsh
-  ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
+export ZSH=${HOME}/.oh-my-zsh
+ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -143,19 +130,19 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 # POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv dir_writable os_icon)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable newline os_icon)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable vcs newline os_icon)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs command_execution_time status vi_mode)
 POWERLEVEL9K_STATUS_VERBOSE=false
 POWERLEVEL9K_PYTHON_ICON=''
 POWERLEVEL9K_ANACONDA_BACKGROUND='black'
 POWERLEVEL9K_ANACONDA_FOREGROUND='cyan'
 # Advanced `vcs` color customization
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='blue'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='yellow'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='red'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
+POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
+POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
+POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
+POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
+POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
 
 # Advanced `vi_mode` color customization
 # Vi-Mode
@@ -222,9 +209,48 @@ plugins=(
     rake
     rbenv
     ruby
+    git
 )
 export KEYTIMEOUT=10
 source $ZSH/oh-my-zsh.sh
+
+if [ ${HOST:0:6} = "lxplus" ]; then
+    export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
+    export PATH=$HOME/private/installed_software/git/bin/:$PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
+    export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
+    export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
+    export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
+    export PATH="$HOME/neovim/bin:$PATH"
+    alias cdeos="/eos/user/n/nscharmb/"
+    alias cdwork="/afs/cern.ch/work/n/nscharmb/"
+    alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
+    alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
+    alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
+    alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
+    alias setupQC="source ~/private/tools/setup/SetupQC.sh"
+    alias ls="ls --color=auto"
+    LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
+    export LS_COLORS
+
+    for space in 75 80 85 88 90 92 94 96 97 98 99
+    do
+        fs listquota | grep user.nscharmb | awk '$4>'$space' {print "Warning your home directory is more than '$space'% full"}'
+    done
+else
+    export PATH="$HOME/nvim-osx64/bin:$PATH"
+	export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
+    export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
+    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3"
+    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2"
+    alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
+    alias mountlxplus="sshfs -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
+    alias mounteve="sshfs -o allow_other,defer_permissions nscharmb@eve.e5.physik.tu-dortmund.de: mount/"
+    alias vim="~/./nvim-osx64/bin/nvim"
+    alias ls="ls -G"
+    LSCOLORS="exfxcxdxbxegedabagacad"
+    export LSCOLORS
+fi
 
 zle -N zle-keymap-select
 function zle-keymap-select zle-line-init
@@ -301,15 +327,42 @@ bindkey -M vicmd 'v' vi-cmd-mode
 bindkey jk vi-cmd-mode
 source ${HOME}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
-export LS_COLORS
-alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 # autoload -Uz compinit
 # compinit
 
+function color_test {
+  #   Daniel Crisman's ANSI color chart script from
+  #   The Bash Prompt HOWTO: 6.1. Colours
+  #   http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/x329.html
+  #  
+  #   This function echoes a bunch of color codes to the 
+  #   terminal to demonstrate what's available.  Each 
+  #   line is the color code of one forground color,
+  #   out of 17 (default + 16 escapes), followed by a 
+  #   test use of that color on all nine background 
+  #   colors (default + 8 escapes).
+  #
 
+  T='gYw'   # The test text
+
+  echo -e "\n         def     40m     41m     42m     43m     44m     45m     46m     47m";
+
+  for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
+             '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
+             '  36m' '1;36m' '  37m' '1;37m';
+
+    do FG=${FGs// /}
+    echo -en " $FGs \033[$FG  $T  "
+    
+    for BG in 40m 41m 42m 43m 44m 45m 46m 47m;
+      do echo -en "$EINS \033[$FG\033[$BG  $T  \033[0m";
+    done
+    echo;
+  done
+  echo
+}
 # fzf + ag configuration
 if _has fzf && _has ag; then
   export FZF_DEFAULT_COMMAND='ag --path-to-ignore ~/.ignore --nocolor -g ""'

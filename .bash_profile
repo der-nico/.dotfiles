@@ -12,10 +12,6 @@ if [ -f "$HOME/bin/zsh-5.4.2" ]; then
         exit
     fi
 fi
-# if [ -f ~/bin/zsh-5.2 ]; then
-#     ~/bin/zsh-5.2
-# fi
-
 if [ -f "$HOME/bin/zsh-5.2" ]; then
     export SHELL=~/bin/zsh-5.2
     ~/bin/zsh-5.2
@@ -24,9 +20,6 @@ if [ -f "$HOME/bin/zsh-5.2" ]; then
         exit
     fi
 fi
-# if [ -f ~/bin/zsh-5.2 ]; then
-#     ~/bin/zsh-5.2
-# fi
 
 # added by Anaconda3 4.2.0 installer
 export PATH="/Users/nicolas/anaconda3/bin:$PATH"
