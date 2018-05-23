@@ -23,7 +23,7 @@ function update-x11-forwarding
       fi
     }
 # ZLE_RPROMPT_INDENT=-1
-if [ ${HOSTNAME:0:6} = "lxplus" ]; then
+if [ ${HOST:0:6} = "lxplus" ]; then
     export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
@@ -37,6 +37,9 @@ if [ ${HOSTNAME:0:6} = "lxplus" ]; then
     alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
     alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
     alias setupQC="source ~/private/tools/setup/SetupQC.sh"
+    alias ls="ls --color=auto"
+    LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
+    export LS_COLORS
 
     for space in 75 80 85 88 90 92 94 96 97 98 99
     do
@@ -48,6 +51,13 @@ else
     export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
     export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3"
     export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2"
+    alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
+    alias mountlxplus="sshfs -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
+    alias mounteve="sshfs -o allow_other,defer_permissions nscharmb@eve.e5.physik.tu-dortmund.de: mount/"
+    alias vim="~/./nvim-osx64/bin/nvim"
+    alias ls="ls -G"
+    LSCOLORS="exfxcxdxbxegedabagacad"
+    export LSCOLORS
 fi
 export PATH=$HOME/bin:$PATH
 # added by Anaconda3 4.3.0 installer
@@ -108,13 +118,13 @@ setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don\'t record an entry that was just recorded again.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don\'t record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don\'t write duplicate entries in the history file.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don\'t execute immediately upon history expansion.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 # Find all occurrences of the search query in the history file.
 #
 # (k) turns it an array of line numbers.
@@ -313,9 +323,6 @@ bindkey -M vicmd 'v' vi-cmd-mode
 bindkey jk vi-cmd-mode
 source ${HOME}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
-export LS_COLORS
-alias ls="ls --color=auto"
 alias grep="grep --color=auto"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
 # autoload -Uz compinit
