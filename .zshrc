@@ -23,42 +23,6 @@ function update-x11-forwarding
       fi
     }
 # ZLE_RPROMPT_INDENT=-1
-if [ ${HOST:0:6} = "lxplus" ]; then
-    export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
-    export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
-    export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
-    export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
-    export PATH="$HOME/neovim/bin:$PATH"
-    alias cdeos="/eos/user/n/nscharmb/"
-    alias cdwork="/afs/cern.ch/work/n/nscharmb/"
-    alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
-    alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
-    alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
-    alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
-    alias setupQC="source ~/private/tools/setup/SetupQC.sh"
-    alias ls="ls --color=auto"
-    LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
-    export LS_COLORS
-
-    for space in 75 80 85 88 90 92 94 96 97 98 99
-    do
-        fs listquota | grep user.nscharmb | awk '$4>'$space' {print "Warning your home directory is more than '$space'% full"}'
-    done
-else
-    export PATH="$HOME/nvim-osx64/bin:$PATH"
-	export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
-    export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
-    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3"
-    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2"
-    alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
-    alias mountlxplus="sshfs -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
-    alias mounteve="sshfs -o allow_other,defer_permissions nscharmb@eve.e5.physik.tu-dortmund.de: mount/"
-    alias vim="~/./nvim-osx64/bin/nvim"
-    alias ls="ls -G"
-    LSCOLORS="exfxcxdxbxegedabagacad"
-    export LSCOLORS
-fi
 export PATH=$HOME/bin:$PATH
 # added by Anaconda3 4.3.0 installer
 #export PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/bin:$PATH"
@@ -154,8 +118,9 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=${HOME}/.oh-my-zsh
-  ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
+export ZSH=${HOME}/.oh-my-zsh
+ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
+
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -247,6 +212,43 @@ plugins=(
 )
 export KEYTIMEOUT=10
 source $ZSH/oh-my-zsh.sh
+
+if [ ${HOST:0:6} = "lxplus" ]; then
+    export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
+    export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
+    export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
+    export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
+    export PATH="$HOME/neovim/bin:$PATH"
+    alias cdeos="/eos/user/n/nscharmb/"
+    alias cdwork="/afs/cern.ch/work/n/nscharmb/"
+    alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
+    alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
+    alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
+    alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
+    alias setupQC="source ~/private/tools/setup/SetupQC.sh"
+    alias ls="ls --color=auto"
+    LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
+    export LS_COLORS
+
+    for space in 75 80 85 88 90 92 94 96 97 98 99
+    do
+        fs listquota | grep user.nscharmb | awk '$4>'$space' {print "Warning your home directory is more than '$space'% full"}'
+    done
+else
+    export PATH="$HOME/nvim-osx64/bin:$PATH"
+	export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
+    export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
+    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3"
+    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2"
+    alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
+    alias mountlxplus="sshfs -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
+    alias mounteve="sshfs -o allow_other,defer_permissions nscharmb@eve.e5.physik.tu-dortmund.de: mount/"
+    alias vim="~/./nvim-osx64/bin/nvim"
+    alias ls="ls -G"
+    LSCOLORS="exfxcxdxbxegedabagacad"
+    export LSCOLORS
+fi
 
 zle -N zle-keymap-select
 function zle-keymap-select zle-line-init
