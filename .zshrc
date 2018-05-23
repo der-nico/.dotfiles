@@ -23,11 +23,33 @@ function update-x11-forwarding
       fi
     }
 # ZLE_RPROMPT_INDENT=-1
-export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
-export PATH="$HOME/neovim/bin:$PATH"
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
+if [ ${HOSTNAME:0:6} = "lxplus" ]; then
+    export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
+    export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
+    export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
+    export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
+    export PATH="$HOME/neovim/bin:$PATH"
+    alias cdeos="/eos/user/n/nscharmb/"
+    alias cdwork="/afs/cern.ch/work/n/nscharmb/"
+    alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
+    alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
+    alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
+    alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
+    alias setupQC="source ~/private/tools/setup/SetupQC.sh"
+
+    for space in 75 80 85 88 90 92 94 96 97 98 99
+    do
+        fs listquota | grep user.nscharmb | awk '$4>'$space' {print "Warning your home directory is more than '$space'% full"}'
+    done
+else
+    export PATH="$HOME/nvim-osx64/bin:$PATH"
+	export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
+    export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
+    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3"
+    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2"
+fi
 export PATH=$HOME/bin:$PATH
-export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
 # added by Anaconda3 4.3.0 installer
 #export PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/bin:$PATH"
 # alias vim="vimx"
@@ -41,25 +63,16 @@ alias realvim="\vim"
 alias vim="nvim"
 alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
-alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
-alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
-alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
-alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
-alias setupQC="source ~/private/tools/setup/SetupQC.sh"
 alias ag='ag --path-to-ignore ~/.ignore'
-alias cdeos="/eos/user/n/nscharmb/"
-alias cdwork="/afs/cern.ch/work/n/nscharmb/"
 function viag () { vim -c "Ack! $*" }
 alias vimag="viag"
 alias pe='~/go/bin/path-extractor'
-# alias pp="tmux capture-pane -S -3000 && tmux save-buffer ~/private/tmp/tmux-buffer && tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | pe | cut -d: -f1 | uniq | xargs ls -d 2>/dev/null | uniq | fzf --height 40%  | xargs echo -n | xclip -i -sel c -f"
+
 tmux_helper(){
  print -z vim $a
 }
 
-alias pp="tmux capture-pane -p -S -3000 > ~/private/tmp/tmux-buffer; tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >~/private/tmp/tmux-buffer ; cat -n ~/private/tmp/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > ~/private/tmp/tmux-buffer; cat ~/private/tmp/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
-# alias pp="tmux capture-pane -p -S -3000 > ~/private/tmp/tmux-buffer; tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >~/private/tmp/tmux-buffer ; cat -n ~/private/tmp/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > ~/private/tmp/tmux-buffer; cat ~/private/tmp/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n"
-# alias pp="tmux capture-pane -p -S -3000 > ~/private/tmp/tmux-buffer; tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >~/private/tmp/tmux-buffer ; cat -n ~/private/tmp/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > ~/private/tmp/tmux-buffer; cat ~/private/tmp/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | while read spo; do print -z vim $spo; done"
+alias pp="tmux capture-pane -p -S -3000 > $TMPDIR/tmux-buffer; tac $TMPDIR/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >$TMPDIR/tmux-buffer ; cat -n $TMPDIR/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > $TMPDIR/tmux-buffer; cat $TMPDIR/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
 
 scpo() {
     save_path="macbook:tmp/"
