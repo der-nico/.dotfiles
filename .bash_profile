@@ -1,8 +1,5 @@
 # .bash_profile
 
-. $(brew --prefix root6)/libexec/thisroot.sh
-alias mountihiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
-alias mountilxplus="sshfs  -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
 # -f tests if file exists, therefore only start zsh if executable is there.
 if [ -f "$HOME/bin/zsh-5.4.2" ]; then
     export SHELL=~/bin/zsh-5.4.2
@@ -21,6 +18,9 @@ if [ -f "$HOME/bin/zsh-5.2" ]; then
     fi
 fi
 
+. $(brew --prefix root6)/libexec/thisroot.sh
+alias mountihiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
+alias mountilxplus="sshfs  -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
 # added by Anaconda3 4.2.0 installer
 export PATH="/Users/nicolas/anaconda3/bin:$PATH"
 export ConndaPYTHON3PATH="/Users/nicolas/anaconda3/bin"
