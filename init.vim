@@ -8,23 +8,24 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-speeddating'
+" Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-rhubarb'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'AndrewRadev/switch.vim'
 Plugin 'parnmatt/vim-root'
 Plugin 'kana/vim-textobj-user'
-    Plugin 'kana/vim-textobj-entire'
+    " Plugin 'kana/vim-textobj-entire'
     Plugin 'kana/vim-textobj-line'
-    Plugin 'tkhren/vim-textobj-numeral'
-    Plugin 'lucapette/vim-textobj-underscore'
+    " Plugin 'tkhren/vim-textobj-numeral'
+    " Plugin 'lucapette/vim-textobj-underscore'
     Plugin 'Julian/vim-textobj-variable-segment'
     Plugin 'michaeljsmith/vim-indent-object'
     Plugin 'sgur/vim-textobj-parameter'
 " Plugin 'tommcdo/vim-express'
 Plugin 'ervandew/supertab'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'haya14busa/vim-easyoperator-line'
+" Plugin 'easymotion/vim-easymotion'
+" Plugin 'haya14busa/vim-easyoperator-line'
 Plugin 'neomake/neomake'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'Shougo/deoplete.nvim'
@@ -44,7 +45,8 @@ Plugin 'chrisbra/vim-zsh'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'tmhedberg/SimpylFold'
 Plugin 'jiangmiao/auto-pairs'
-Plugin 'bogado/file-line'
+Plugin 'wsdjeg/vim-fetch'
+Plugin 'mbbill/undotree'
 
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -105,19 +107,19 @@ set lazyredraw
 set magic
 "Match System clipboard with vim (and server)
 command CV execute "echo serverlist()"
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
-let g:easy_align_delimiters = {
-\ 'd': {
-\     'pattern':       ':\|,',
-\     'left_margin':   0,
-\     'stick_to_left': 1,
-\     'ignore_groups':   ['String']
-\   }
-\ }
-" nmap  gaii*d
-command Form execute "normal gaii*d"
-" nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
+" nmap ga <Plug>(EasyAlign)
+" xmap ga <Plug>(EasyAlign)
+" let g:easy_align_delimiters = {
+" \ 'd': {
+" \     'pattern':       ':\|,',
+" \     'left_margin':   0,
+" \     'stick_to_left': 1,
+" \     'ignore_groups':   ['String']
+" \   }
+" \ }
+" " nmap  gaii*d
+" command Form execute "normal gaii*d"
+" " nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
 set scrolloff=3
 
 set complete+=kspell
@@ -233,28 +235,28 @@ nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
 nnoremap <Leader>0 :10b<CR>
 
-"""""""""""""""""""
-"   easy-motion
-"""""""""""""""""""
-nnoremap ; :
+""""""""""""""""""""
+""   easy-motion
+""""""""""""""""""""
+"nnoremap ; :
 
-map  <Leader>j <Plug>(easymotion-j)
-map  <Leader>k <Plug>(easymotion-k)
-map  <Leader>t <Plug>(easymotion-bd-t)
-nmap <Leader>t <Plug>(easymotion-overwin-t)
+"map  <Leader>j <Plug>(easymotion-j)
+"map  <Leader>k <Plug>(easymotion-k)
+"map  <Leader>t <Plug>(easymotion-bd-t)
+"nmap <Leader>t <Plug>(easymotion-overwin-t)
 
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+"map  <Leader>f <Plug>(easymotion-bd-f)
+"nmap <Leader>f <Plug>(easymotion-overwin-f)
 
-nmap s <Plug>(easymotion-overwin-f2)
+"nmap s <Plug>(easymotion-overwin-f2)
 
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+"" Move to line
+"map <Leader>L <Plug>(easymotion-bd-jk)
+"nmap <Leader>L <Plug>(easymotion-overwin-line)
 
-" Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+"" Move to word
+"map  <Leader>w <Plug>(easymotion-bd-w)
+"nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 
 
