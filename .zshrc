@@ -233,9 +233,28 @@ if [ ${HOST:0:6} = "lxplus" ]; then
     LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
     export LS_COLORS
 
-    for space in 75 80 85 88 90 92 94 96 97 98 99
-    do
-        fs listquota | grep user.nscharmb | awk '$4>'$space' {print "Warning your home directory is more than '$space'% full"}'
+    BLACK='\033[01;30m'
+    RED='\033[01;31m'
+	GREEN='\033[01;32m'
+	YELLOW='\033[01;33m'
+	BLUE='\033[01;34m'
+
+    bgBLACK='\033[01;40m'
+    bgRED='\033[01;41m'
+	bgGREEN='\033[01;42m'
+	bgYELLOW='\033[01;43m'
+	bgBLUE='\033[01;44m'
+
+
+    declare -a used_quota=("70" "75" "80" "85" "88" "90" "92" "94" "96" "97" "98" "99" )
+    # declare -a used_quota=("17" "17" "18" "18" "18" "19" "19" "19" "19" "19" "19" "19" )
+    declare -a colors=( "$GREEN" "$BLUE" "$YELLOW" "$RED" "$GREEN" "$BLUE" "$BLACK" "$RED" "$GREEN" "$BLUE" "$YELLOW" "$RED" )
+    declare -a bg_colors=( "$bgBLACK" "$bgBLACK" "$bgBLACK" "$bgBLACK" "$bgYELLOW" "$bgYELLOW" "$bgYELLOW" "$bgYELLOW" "$bgRED" "$bgRED" "$bgRED" "$bgRED")
+    for ((i = 1; i <= ${#used_quota[@]}; ++i)); do \
+        space=${used_quota[$i]};
+        color=${colors[$i]}${bg_colors[$i]};
+        printtext="Warning your home directory is more than "$space"% full"
+        fs listquota | grep user.nscharmb | awk -v c=$color -v nc="\033[0m" -v t=$printtext '$4>'$space' {print c,t,"("$4")",nc}'
     done
 else
     export PATH="$HOME/nvim-osx64/bin:$PATH"
