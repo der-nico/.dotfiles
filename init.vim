@@ -47,6 +47,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'wsdjeg/vim-fetch'
 Plugin 'mbbill/undotree'
+Plugin 'chrisbra/Recover.vim'
 
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
