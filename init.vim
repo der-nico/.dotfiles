@@ -119,7 +119,7 @@ command CV execute "echo serverlist()"
 " \   }
 " \ }
 " " nmap  gaii*d
-" command Form execute "normal gaii*d"
+command Form execute "normal gaii*d"
 " " nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
 set scrolloff=3
 
