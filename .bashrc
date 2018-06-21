@@ -19,6 +19,7 @@ function update-x11-forwarding
       fi
     }
 alias Setupk='kinit nscharmb@CERN.CH'
+alias setupafs='kinit nscharmb@CERN.CH; aklog -cell cern.ch'
 export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
 export PATH="$HOME/neovim/bin:$PATH"
 # added by Anaconda3 4.3.0 installer
