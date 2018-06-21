@@ -8,33 +8,37 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-sleuth'
+" Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-rhubarb'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'AndrewRadev/switch.vim'
 Plugin 'parnmatt/vim-root'
 Plugin 'kana/vim-textobj-user'
-    Plugin 'kana/vim-textobj-entire'
+    " Plugin 'kana/vim-textobj-entire'
     Plugin 'kana/vim-textobj-line'
-    Plugin 'tkhren/vim-textobj-numeral'
-    Plugin 'lucapette/vim-textobj-underscore'
+    " Plugin 'tkhren/vim-textobj-numeral'
+    " Plugin 'lucapette/vim-textobj-underscore'
     Plugin 'Julian/vim-textobj-variable-segment'
     Plugin 'michaeljsmith/vim-indent-object'
     Plugin 'sgur/vim-textobj-parameter'
 " Plugin 'tommcdo/vim-express'
 Plugin 'ervandew/supertab'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'haya14busa/vim-easyoperator-line'
+" Plugin 'easymotion/vim-easymotion'
+" Plugin 'haya14busa/vim-easyoperator-line'
 Plugin 'neomake/neomake'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'Shougo/deoplete.nvim'
 Plugin 'zchee/deoplete-jedi'
 " Plugin 'davidhalter/jedi-vim'
-Plugin 'zchee/deoplete-clang'
+" Plugin 'zchee/deoplete-clang'
 " Plugin 'tweekmonster/deoplete-clang2'
 Plugin 'Shougo/echodoc.vim'
 Plugin 'tweekmonster/startuptime.vim'
-Plugin 'junegunn/vim-easy-align'
+" Plugin 'junegunn/vim-easy-align'
+Plugin 'godlygeek/tabular'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'AndrewRadev/linediff.vim'
@@ -43,8 +47,13 @@ Plugin 'tpope/vim-markdown'
 Plugin 'chrisbra/vim-zsh'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'tmhedberg/SimpylFold'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'bogado/file-line'
+" Plugin 'jiangmiao/auto-pairs'
+Plugin 'wsdjeg/vim-fetch'
+Plugin 'mbbill/undotree'
+Plugin 'chrisbra/Recover.vim'
+Plugin 'vim-syntastic/syntastic'
+" Plugin 'tell-k/vim-autopep8'
+" Plugin 'nvie/vim-flake8'
 
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -55,16 +64,19 @@ filetype plugin indent on    " required
 " :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
 " :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 
+let g:syntastic_python_checkers=['flake8']
+let g:syntastic_always_populate_loc_list=1
+" let g:syntastic_python_flake8_args='--ignore=E501,E225'
+
+
+
 let g:deoplete#enable_at_startup = 1
-" let g:python3_host_prog = $ConndaPYTHON3PATH
-let g:python3_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python'
-let g:python_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python'
-" let g:python3_host_prog = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
-let g:deoplete#sources#jedi#python_path = $ConndaPYTHON3PATH
-" let g:deoplete#sources#jedi#python_path = '/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python'
+let g:python3_host_prog = $ConndaPYTHON3PATH
+let g:python_host_prog = $ConndaPYTHON2PATH
+let g:deoplete#sources#jedi#python_path = $ConndaPYTHONPATHMAIN
 let g:deoplete#sources#jedi#extra_path = '/afs/cern.ch/user/n/nscharmb/private/python'
 let g:deoplete#sources#jedi#server_timeout = 120
-let g:deoplete#sources#clang#libclang_path = ''
+" let g:deoplete#sources#clang#libclang_path = ''
 let g:deoplete#auto_completion_start_length = 2
 let g:echodoc#enable_at_startup = 1
 set noshowmode
@@ -78,6 +90,8 @@ set noshowmode
 "   General settings
 "
 """""""""""""""""""""""""
+
+nnoremap ; :
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
@@ -108,19 +122,19 @@ set lazyredraw
 set magic
 "Match System clipboard with vim (and server)
 command CV execute "echo serverlist()"
-nmap ga <Plug>(EasyAlign)
-xmap ga <Plug>(EasyAlign)
-let g:easy_align_delimiters = {
-\ 'd': {
-\     'pattern':       ':\|,',
-\     'left_margin':   0,
-\     'stick_to_left': 1,
-\     'ignore_groups':   ['String']
-\   }
-\ }
-" nmap  gaii*d
+" nmap ga <Plug>(EasyAlign)
+" xmap ga <Plug>(EasyAlign)
+" let g:easy_align_delimiters = {
+" \ 'd': {
+" \     'pattern':       ':\|,',
+" \     'left_margin':   0,
+" \     'stick_to_left': 1,
+" \     'ignore_groups':   ['String']
+" \   }
+" \ }
+" " nmap  gaii*d
 command Form execute "normal gaii*d"
-" nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
+" " nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
 set scrolloff=3
 
 set complete+=kspell
@@ -193,6 +207,8 @@ set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set showmatch
 hi DiffText   cterm=none ctermfg=Black ctermbg=Red gui=none guifg=Black guibg=Red
 hi DiffChange cterm=none ctermfg=Black ctermbg=LightMagenta gui=none guifg=Black guibg=LightMagenta
+highlight ColorColumn ctermbg=magenta
+autocmd FileType python call matchadd('ColorColumn', '\%80v', 100)
 
 
 
@@ -210,6 +226,7 @@ set smartcase
 set hlsearch
 set incsearch
 
+map <A-]> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 """""""""""""""""""
 " Between splits
 """""""""""""""""""
@@ -217,6 +234,20 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+set splitbelow
+set splitright
+""Max out the height of the current split
+"ctrl + w _
+""Max out the width of the current split
+"ctrl + w |
+""Normalize all split sizes, which is very handy when resizing terminal
+"ctrl + w =
+""Swap top/bottom or left/right split
+"Ctrl+W R
+""Break out current window into a new tabview
+"Ctrl+W T
+""Close every window in the current tabview but the current one
+"Ctrl+W o
 
 """""""""""""""""""
 " Between buffers
@@ -236,28 +267,27 @@ nnoremap <Leader>8 :8b<CR>
 nnoremap <Leader>9 :9b<CR>
 nnoremap <Leader>0 :10b<CR>
 
-"""""""""""""""""""
-"   easy-motion
-"""""""""""""""""""
-nnoremap ; :
+""""""""""""""""""""
+""   easy-motion
+""""""""""""""""""""
 
-map  <Leader>j <Plug>(easymotion-j)
-map  <Leader>k <Plug>(easymotion-k)
-map  <Leader>t <Plug>(easymotion-bd-t)
-nmap <Leader>t <Plug>(easymotion-overwin-t)
+"map  <Leader>j <Plug>(easymotion-j)
+"map  <Leader>k <Plug>(easymotion-k)
+"map  <Leader>t <Plug>(easymotion-bd-t)
+"nmap <Leader>t <Plug>(easymotion-overwin-t)
 
-map  <Leader>f <Plug>(easymotion-bd-f)
-nmap <Leader>f <Plug>(easymotion-overwin-f)
+"map  <Leader>f <Plug>(easymotion-bd-f)
+"nmap <Leader>f <Plug>(easymotion-overwin-f)
 
-nmap s <Plug>(easymotion-overwin-f2)
+"nmap s <Plug>(easymotion-overwin-f2)
 
-" Move to line
-map <Leader>L <Plug>(easymotion-bd-jk)
-nmap <Leader>L <Plug>(easymotion-overwin-line)
+"" Move to line
+"map <Leader>L <Plug>(easymotion-bd-jk)
+"nmap <Leader>L <Plug>(easymotion-overwin-line)
 
-" Move to word
-map  <Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader>w <Plug>(easymotion-overwin-w)
+"" Move to word
+"map  <Leader>w <Plug>(easymotion-bd-w)
+"nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 
 
@@ -266,6 +296,8 @@ nmap <Leader>w <Plug>(easymotion-overwin-w)
 "   Additional Setups
 "
 """""""""""""""""""""""""
+
+nnoremap <leader>s /\V<C-R>"<CR>
 
 """""""""""""""""""
 "   GoAppend
