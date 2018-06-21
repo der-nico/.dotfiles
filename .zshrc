@@ -23,8 +23,9 @@ function update-x11-forwarding
       fi
     }
 # ZLE_RPROMPT_INDENT=-1
+alias setupafs='kinit nscharmb@CERN.CH; aklog -cell cern.ch'
 export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
-export PATH="$HOME/neovim/bin:$PATH"
+export PATH="$HOME/neovim/bin:$PATH:$HOME/local/bin"
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
 export PATH=$HOME/bin:$PATH
 export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
@@ -46,12 +47,14 @@ alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
 alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
 alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
 alias setupQC="source ~/private/tools/setup/SetupQC.sh"
-alias ag='ag --path-to-ignore ~/.ignore'
+alias ag='/afs/cern.ch/work/n/nscharmb/anaconda3/bin/ag --path-to-ignore ~/.ignore'
 alias cdeos="/eos/user/n/nscharmb/"
 alias cdwork="/afs/cern.ch/work/n/nscharmb/"
 function viag () { vim -c "Ack! $*" }
 alias vimag="viag"
 alias pe='~/go/bin/path-extractor'
+export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
+alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
 # alias pp="tmux capture-pane -S -3000 && tmux save-buffer ~/private/tmp/tmux-buffer && tac ~/private/tmp/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | pe | cut -d: -f1 | uniq | xargs ls -d 2>/dev/null | uniq | fzf --height 40%  | xargs echo -n | xclip -i -sel c -f"
 tmux_helper(){
  print -z vim $a
