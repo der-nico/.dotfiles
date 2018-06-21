@@ -214,7 +214,7 @@ plugins=(
 export KEYTIMEOUT=10
 source $ZSH/oh-my-zsh.sh
 
-if [ ${HOST:0:6} = "lxplus" || ${HOST:0:4} = "pc20"]; then
+if [ ${HOST:0:6} = "lxplus" ] | [ ${HOST:0:4} = "pc20" ]; then
     alias setupafs='kinit nscharmb@CERN.CH; aklog -cell cern.ch'
     export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
     export PATH=$HOME/private/installed_software/git/bin/:$PATH
@@ -247,7 +247,7 @@ if [ ${HOST:0:6} = "lxplus" || ${HOST:0:4} = "pc20"]; then
 	bgBLUE='\033[01;44m'
 
 
-    if [ ${HOST:0:6} = "lxplus"]; then
+    if [ ${HOST:0:6} = "lxplus" ]; then
         declare -a used_quota=("70" "75" "80" "85" "88" "90" "92" "94" "96" "97" "98" "99" )
         # declare -a used_quota=("17" "17" "18" "18" "18" "19" "19" "19" "19" "19" "19" "19" )
         declare -a colors=( "$GREEN" "$BLUE" "$YELLOW" "$RED" "$GREEN" "$BLUE" "$BLACK" "$RED" "$GREEN" "$BLUE" "$YELLOW" "$RED" )
@@ -260,8 +260,10 @@ if [ ${HOST:0:6} = "lxplus" || ${HOST:0:4} = "pc20"]; then
         done
     else
         export PATH="$PATH:$HOME/local/bin"
+        export PATH="$PATH:/afs/cern.ch/work/n/nscharmb/anaconda3/bin/"
         export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
         alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
+        # alias ag='/afs/cern.ch/work/n/nscharmb/anaconda3/bin/ag --path-to-ignore ~/.ignore'
     fi
 else
     export PATH="$HOME/nvim-osx64/bin:$PATH"
