@@ -214,7 +214,7 @@ plugins=(
 export KEYTIMEOUT=10
 source $ZSH/oh-my-zsh.sh
 
-if [ ${HOST:0:6} = "lxplus" ] | [ ${HOST:0:4} = "pc20" ]; then
+if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     alias setupafs='kinit nscharmb@CERN.CH; aklog -cell cern.ch'
     export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
     export PATH=$HOME/private/installed_software/git/bin/:$PATH
