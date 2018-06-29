@@ -133,6 +133,8 @@ command CV execute "echo serverlist()"
 " \   }
 " \ }
 " " nmap  gaii*d
+" Set the working directory to wherever the open file lives
+set autochdir
 command Form execute "normal gaii*d"
 " " nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
 set scrolloff=3

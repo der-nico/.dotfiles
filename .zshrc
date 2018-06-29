@@ -98,8 +98,6 @@ setopt HIST_VERIFY               # Don't execute immediately upon history expans
 #
 _history_substring_search_matches=(${(kon)history[(R)(#$HISTORY_SUBSTRING_SEARCH_GLOBBING_FLAGS)*${_history_substring_search_query_escaped}*]})
 zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
-
-# --8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--
 # Remove duplicate entries if HIST_FIND_NO_DUPS is set.
 if [[ -o HIST_FIND_NO_DUPS ]]; then
     local -A unique_matches
@@ -108,28 +106,18 @@ if [[ -o HIST_FIND_NO_DUPS ]]; then
     done
     _history_substring_search_matches=(${(@no)unique_matches})
 fi
-# --8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--8<--
 
-#
-# Define the range of values that $_history_substring_search_match_index
-
-
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=${HOME}/.oh-my-zsh
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
 
-
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-# ZSH_THEME="agnoster"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir rbenv dir_writable os_icon)
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable vcs newline os_icon)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs command_execution_time status vi_mode)
 POWERLEVEL9K_STATUS_VERBOSE=false
@@ -217,7 +205,7 @@ source $ZSH/oh-my-zsh.sh
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     alias setupafs='kinit nscharmb@CERN.CH; aklog -cell cern.ch'
     export PATH=/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH
-    export PATH=$HOME/private/installed_software/git/bin/:$PATH
+    # export PATH=$HOME/private/installed_software/git/bin/:$PATH
     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/lib
     export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
     export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
@@ -267,6 +255,8 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
         alias setupTTHbbAnalysis="source ~/private/tools/setup/SetupTTHbbAnalysis.sh"
         # alias ag='/afs/cern.ch/work/n/nscharmb/anaconda3/bin/ag --path-to-ignore ~/.ignore'
     fi
+    setupATLAS
+    lsetup git
 else
     export PATH="$HOME/nvim-osx64/bin:$PATH"
 	export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
