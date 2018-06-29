@@ -253,8 +253,8 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
         export PATH="$PATH:/afs/cern.ch/work/n/nscharmb/anaconda3/bin/"
         export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
         alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
-        lsetup git
         source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
+        lsetup git
         alias setupTrexFitter="source ~/private/tools/setup/SetupTrexFitter.sh"
         alias setupTTHbbAnalysis="source ~/private/tools/setup/SetupTTHbbAnalysis.sh"
         # alias ag='/afs/cern.ch/work/n/nscharmb/anaconda3/bin/ag --path-to-ignore ~/.ignore'
