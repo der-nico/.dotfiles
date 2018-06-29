@@ -236,6 +236,8 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
 
 
     if [ ${HOST:0:6} = "lxplus" ]; then
+        setupATLAS
+        lsetup git
         declare -a used_quota=("70" "75" "80" "85" "88" "90" "92" "94" "96" "97" "98" "99" )
         # declare -a used_quota=("17" "17" "18" "18" "18" "19" "19" "19" "19" "19" "19" "19" )
         declare -a colors=( "$GREEN" "$BLUE" "$YELLOW" "$RED" "$GREEN" "$BLUE" "$BLACK" "$RED" "$GREEN" "$BLUE" "$YELLOW" "$RED" )
@@ -251,12 +253,12 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
         export PATH="$PATH:/afs/cern.ch/work/n/nscharmb/anaconda3/bin/"
         export ATLAS_LOCAL_ROOT_BASE=/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase
         alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'
+        lsetup git
+        source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh
         alias setupTrexFitter="source ~/private/tools/setup/SetupTrexFitter.sh"
         alias setupTTHbbAnalysis="source ~/private/tools/setup/SetupTTHbbAnalysis.sh"
         # alias ag='/afs/cern.ch/work/n/nscharmb/anaconda3/bin/ag --path-to-ignore ~/.ignore'
     fi
-    setupATLAS
-    lsetup git
 else
     export PATH="$HOME/nvim-osx64/bin:$PATH"
 	export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
