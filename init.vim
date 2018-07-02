@@ -54,6 +54,7 @@ Plugin 'chrisbra/Recover.vim'
 Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
+Plugin 'airblade/vim-rooter'
 
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -134,7 +135,6 @@ command CV execute "echo serverlist()"
 " \ }
 " " nmap  gaii*d
 " Set the working directory to wherever the open file lives
-set autochdir
 command Form execute "normal gaii*d"
 " " nmap de :execute "normal \<Plug>(EasyAlign)ii*d"
 set scrolloff=3
