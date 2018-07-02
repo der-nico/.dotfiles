@@ -13,6 +13,7 @@ Plugin 'tpope/vim-sleuth'
 " Plugin 'tpope/vim-speeddating'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rhubarb'
+" Plugin 'tpope/vim-sensible' " I have to check this actually helps me 
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'AndrewRadev/switch.vim'
 Plugin 'parnmatt/vim-root'
