@@ -103,7 +103,7 @@ nmap <silent> ,/ :nohlsearch<CR>
 inoremap jj <ESC>
 inoremap jk <ESC>
 " Split line at cursor position
-nnoremap K :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
+" nnoremap K :keeppatterns substitute/\s*\%#\s*/\r/e <bar> normal! ==<CR>
 set viminfo='20,<50,s10
 " Ignore compiled files
  set wildignore=*.o,*~,*.pyc,*.so,*.d
@@ -408,9 +408,10 @@ command! -bang -nargs=* Ag
 if executable('ag')
   let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
 endif
-nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "\b<cword>\b" <CR>
+nmap K    :let CWORD = expand("<cword>") <CR> : echo CWORD <CR>
+nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "\b<C-R>=CWORD<CR>\b" <CR>
 autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack!  --python "\b<C-R>=CWORD<CR>\b" % <CR> :AckAdd! --ignore-dir=# --python "\b<C-R>=CWORD<CR>\b" <CR> :AckAdd! --ignore-dir={"<C-R>=DIR<CR>","#"} --python "\b<C-R>=CWORD<CR>\b" ~/private/python <CR>
-autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! --cpp "\b<cword>\b" <CR>
+autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! --cpp "\b<C-R>=CWORD<CR>\b" <CR>
 
 
 nmap \    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "<cword>" <CR>
