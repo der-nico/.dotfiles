@@ -200,7 +200,6 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     lsetup git
     alias setupTrexFitter="source ~/private/tools/setup/SetupTrexFitter.sh"
     alias setupTTHbbAnalysis="source ~/private/tools/setup/SetupTTHbbAnalysis.sh"
-    # alias ag='/afs/cern.ch/work/n/nscharmb/anaconda3/bin/ag --path-to-ignore ~/.ignore'
   fi
 else
     alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
