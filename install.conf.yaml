@@ -16,6 +16,7 @@
     ~/.config/nvim/filetype.vim: filetype.vim
     ~/.tmux.conf: tmux.conf
     ~/.bash_profile: .bash_profile
+    ~/.zprofile: .zprofile
     ~/.bashrc: .bashrc
     ~/.zshrc: .zshrc
     ~/zsh-syntax-highlighting: zsh-syntax-highlighting
