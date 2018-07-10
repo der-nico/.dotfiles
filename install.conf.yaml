@@ -6,6 +6,7 @@
 - shell:
     - git submodule update --init --recursive
     - mkdir -p ~/.config/nvim
+    - mkdir -p ~/bin
     - git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim || true
     - cd  ~/.config/nvim/bundle/Vundle.vim
     - cd  ~/.config/nvim/bundle/Vundle.vim; git pull
@@ -21,6 +22,8 @@
     ~/.oh-my-zsh: .oh-my-zsh
     ~/.oh-my-zsh/custom/better_completion.zsh: .oh-my-zsh-custom/better_completion.zsh
     ~/.oh-my-zsh/custom/themes/powerlevel9k: .oh-my-zsh-custom/themes/powerlevel9k
+    ~/bin/ack : ack
+    ~/bin/ag : ag
 
 
 - shell:
