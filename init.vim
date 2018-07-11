@@ -343,6 +343,8 @@ let g:switch_custom_definitions =
     \   ['top', 'bottom'],
     \   ['height', 'width'],
     \   ['before', 'after'],
+    \   ['TRUE', 'FALSE'],
+    \   ['sin', 'cos'],
     \ ]
 
 " Advanced customization using autoload functions
