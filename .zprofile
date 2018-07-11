@@ -20,6 +20,6 @@ else
     export PATH="$HOME/nvim-osx64/bin:$PATH"
     export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
     export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
-    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3"
-    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2"
+    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3/bin/python"
+    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2/bin/python"
 fi
