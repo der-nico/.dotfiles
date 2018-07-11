@@ -2,6 +2,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.fzf
+set rtp+=/usr/local/opt/fzf
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
@@ -410,15 +411,14 @@ command! -bang -nargs=* Ag
 if executable('ag')
   let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
 endif
-nmap K    :let CWORD = expand("<cword>") <CR> : echo CWORD <CR>
-nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "\b<C-R>=CWORD<CR>\b" <CR>
-autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack!  --python "\b<C-R>=CWORD<CR>\b" % <CR> :AckAdd! --ignore-dir=# --python "\b<C-R>=CWORD<CR>\b" <CR> :AckAdd! --ignore-dir={"<C-R>=DIR<CR>","#"} --python "\b<C-R>=CWORD<CR>\b" ~/private/python <CR>
-autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! --cpp "\b<C-R>=CWORD<CR>\b" <CR>
+command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, <bang>0)
+nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag "<C-R>=CWORD<CR>" <CR>
+autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag  --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools <CR>
+autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
 
-
-nmap \    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "<cword>" <CR>
-autocmd FileType python nmap \ :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack!  --python "<C-R>=CWORD<CR>" % <CR> :AckAdd! --ignore-dir=# --python "<C-R>=CWORD<CR>" <CR> :AckAdd! --ignore-dir={"<C-R>=DIR<CR>","#"} --python "<C-R>=CWORD<CR>" ~/private/python <CR>
-autocmd FileType cpp nmap \ :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! --cpp "<cword>" <CR>
+" nmap \    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "<cword>" <CR>
+" autocmd FileType python nmap \ :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack!  --python "<C-R>=CWORD<CR>" % <CR> :AckAdd! --ignore-dir=# --python "<C-R>=CWORD<CR>" <CR> :AckAdd! --ignore-dir={"<C-R>=DIR<CR>","#"} --python "<C-R>=CWORD<CR>" ~/private/python <CR>
+" autocmd FileType cpp nmap \ :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! --cpp "<cword>" <CR>
 
 nnoremap <silent> cr :<C-U><C-R><C-R>='let @' . v:register . ' = ' . string(getreg())<CR><C-F><Left>
 
