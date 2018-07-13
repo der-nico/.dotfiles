@@ -151,14 +151,34 @@ nnoremap <silent> q: :History:<CR>
 nnoremap <silent> q; :History:<CR>
 nnoremap <silent> q/ :History/<CR>
 nnoremap <silent> q. :History<CR>
+nnoremap <leader>: :History:<CR>
+nnoremap <leader>; :History:<CR>
+nnoremap <leader>/ :History/<CR>
 nnoremap <leader>p :History<CR>
 nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>t :Files<CR>
+nnoremap <leader>T :Files<Space>
 nnoremap <leader>h :let @/ = expand("<cword>")<CR>
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+" fugitive git bindings
+nnoremap <leader>ga :Git add %:p<CR><CR>
+nnoremap <leader>gs :Gstatus<CR>
+nnoremap <leader>gc :Gcommit -v -q<CR>
+" nnoremap <leader>gt :Gcommit -v -q %:p<CR>
+nnoremap <leader>gd :Gdiff<CR>
+" nnoremap <leader>ge :Gedit<CR>
+" nnoremap <leader>gr :Gread<CR>
+nnoremap <leader>gw :Gwrite<CR><CR>
+" nnoremap <leader>gl :silent! Glog<CR>:bot copen<CR>
+" nnoremap <leader>gp :Ggrep<leader>
+" nnoremap <leader>gm :Gmove<Space>
+" nnoremap <leader>gb :Git branch<Space>
+" nnoremap <leader>go :Git checkout<Space>
+" nnoremap <leader>gps :Dispatch! git push<CR>
+" nnoremap <leader>gpl :Dispatch! git pull<CR>
 
 set tags=./tags;,tags;,/afs/cern.ch/user/n/nscharmb/private/python/tags;
 " Mapping selecting mappings
@@ -256,20 +276,20 @@ set splitright
 """""""""""""""""""
 " Between buffers
 """""""""""""""""""
-nnoremap <Leader>l :ls<CR>
-nnoremap <Leader>/ :bp<CR>
-nnoremap <Leader>. :bn<CR>
-nnoremap <Leader>g :e#<CR>
-nnoremap <Leader>1 :1b<CR>
-nnoremap <Leader>2 :2b<CR>
-nnoremap <Leader>3 :3b<CR>
-nnoremap <Leader>4 :4b<CR>
-nnoremap <Leader>5 :5b<CR>
-nnoremap <Leader>6 :6b<CR>
-nnoremap <Leader>7 :7b<CR>
-nnoremap <Leader>8 :8b<CR>
-nnoremap <Leader>9 :9b<CR>
-nnoremap <Leader>0 :10b<CR>
+" nnoremap <Leader>l :ls<CR>
+" nnoremap <Leader>/ :bp<CR>
+" nnoremap <Leader>. :bn<CR>
+" nnoremap <Leader>g :e#<CR>
+" nnoremap <Leader>1 :1b<CR>
+" nnoremap <Leader>2 :2b<CR>
+" nnoremap <Leader>3 :3b<CR>
+" nnoremap <Leader>4 :4b<CR>
+" nnoremap <Leader>5 :5b<CR>
+" nnoremap <Leader>6 :6b<CR>
+" nnoremap <Leader>7 :7b<CR>
+" nnoremap <Leader>8 :8b<CR>
+" nnoremap <Leader>9 :9b<CR>
+" nnoremap <Leader>0 :10b<CR>
 
 """"""""""""""""""""
 ""   easy-motion
@@ -300,8 +320,6 @@ nnoremap <Leader>0 :10b<CR>
 "   Additional Setups
 "
 """""""""""""""""""""""""
-
-nnoremap <leader>s /\V<C-R>"<CR>
 
 """""""""""""""""""
 "   GoAppend
