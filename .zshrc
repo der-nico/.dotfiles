@@ -30,6 +30,7 @@ alias vimpy="vimx --cmd 'let include_pymode=1'"
 alias ag='ag --path-to-ignore ~/.ignore'
 function viag () { vim -c "Ack! $*" }
 alias vimag="viag"
+alias gvim="git vim"
 alias pe='~/go/bin/path-extractor'
 tmux_helper(){
  print -z vim $a
@@ -283,7 +284,7 @@ function color_test {
 }
 # fzf + ag configuration
 if _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND='ag --path-to-ignore ~/.ignore --nocolor -g ""'
+  export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.ignore --nocolor -f -g ""'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
