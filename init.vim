@@ -159,6 +159,18 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>T :Files<Space>
 nnoremap <leader>h :let @/ = expand("<cword>")<CR>
+nnoremap <leader>r :call fzf#run({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}})<CR>
+" nnoremap <leader>r :call fzf#run({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}})
+
+function! s:root_info_list()
+  return !cat ~/private/.root_info_data.txt
+endfunction
+function! Yank_to_register(data)
+  let @" = a:data
+  silent! let @* = a:data
+  silent! let @+ = a:data
+endfunction
+
 let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
@@ -431,7 +443,7 @@ if executable('ag')
 endif
 command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, <bang>0)
 nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag "<C-R>=CWORD<CR>" <CR>
-autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag  --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools <CR>
+autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag  --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
 autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
 
 " nmap \    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "<cword>" <CR>
