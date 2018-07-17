@@ -161,7 +161,6 @@ nnoremap <leader>T :Files<Space>
 nnoremap <leader>h :let @/ = expand("<cword>")<CR>
 nnoremap <leader>r :call fzf#run(fzf#wrap({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}}))<CR>
 " nnoremap <leader>r :call fzf#run({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}})
-
 function! s:root_info_list()
   return !cat ~/private/.root_info_data.txt
 endfunction
@@ -433,7 +432,7 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-command! -bang -nargs=* Ag
+command! -bang -nargs=+ -complete=dir Ag
   \ call fzf#vim#ag(<q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
@@ -441,9 +440,15 @@ command! -bang -nargs=* Ag
 if executable('ag')
   let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
 endif
-command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, <bang>0)
+" command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, <bang>0)
+" command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, fzf#wrap('ag-raw',
+command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>,
+  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+  \                 <bang>0)
+\ {'options': "--preview 'coderay $(cut -d: -f1 <<< {}) | sed -n $(cut -d: -f2 <<< {}),\\$p | head -".&lines."'"}))
 nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag "<C-R>=CWORD<CR>" <CR>
-autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag  --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
+autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
 autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
 
 " nmap \    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ack! "<cword>" <CR>
