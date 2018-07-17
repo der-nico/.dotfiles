@@ -159,7 +159,7 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>t :Files<CR>
 nnoremap <leader>T :Files<Space>
 nnoremap <leader>h :let @/ = expand("<cword>")<CR>
-nnoremap <leader>r :call fzf#run({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}})<CR>
+nnoremap <leader>r :call fzf#run(fzf#wrap({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}}))<CR>
 " nnoremap <leader>r :call fzf#run({'source': 'cat ~/private/.root_info_data.txt', 'sink': {a -> execute("execute Yank_to_register('".a."')", "")}})
 
 function! s:root_info_list()
