@@ -29,6 +29,7 @@ export PATH="$HOME/bin:$PATH"
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     export PATH="$HOME/neovim/bin:$PATH"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
+    export RUCIO_ACCOUNT="nscharmb"
     if [ ${HOST:0:6} = "lxplus" ]; then
         # set TEX directory for lxplus
         export PATH="/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH"
