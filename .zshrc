@@ -28,6 +28,7 @@ alias vim="nvim"
 alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
 alias ag='ag --path-to-ignore ~/.ignore'
+alias edithistory="vim ~/.zsh_history"
 function viag () { vim -c "Ack! $*" }
 alias vimag="viag"
 alias gvim="git vim"
