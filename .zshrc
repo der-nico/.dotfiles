@@ -28,7 +28,7 @@ alias vim="nvim"
 alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
 alias ag='ag --path-to-ignore ~/.ignore'
-function viag () { vim -c "Ack! $*" }
+function viag () { vim -c "Ag $*" }
 alias vimag="viag"
 alias gvim="git vim"
 alias pe='~/go/bin/path-extractor'
