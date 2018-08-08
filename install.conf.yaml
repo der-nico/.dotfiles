@@ -17,9 +17,9 @@
     ~/.bash_profile: .bash_profile
     ~/.zprofile: .zprofile
     ~/.zpreztorc: .zpreztorc
+    ~/.zprezto: prezto
     ~/.bashrc: .bashrc
     ~/.zshrc: .zshrc
-    ~/zsh-syntax-highlighting: zsh-syntax-highlighting
     ~/bin/ack : ack
     ~/bin/ag : ag
 
