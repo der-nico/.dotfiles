@@ -10,3 +10,6 @@
 	path = .oh-my-zsh-custom/themes/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k
 	branch = master
+[submodule "prezto"]
+	path = prezto
+	url = https://github.com/der-nico/prezto.git
