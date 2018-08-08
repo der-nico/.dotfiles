@@ -40,8 +40,7 @@ Plugin 'zchee/deoplete-jedi'
 " Plugin 'tweekmonster/deoplete-clang2'
 Plugin 'Shougo/echodoc.vim'
 Plugin 'tweekmonster/startuptime.vim'
-" Plugin 'junegunn/vim-easy-align'
-Plugin 'godlygeek/tabular'
+" Plugin 'godlygeek/tabular'
 Plugin 'junegunn/fzf.vim'
 Plugin 'mileszs/ack.vim'
 Plugin 'AndrewRadev/linediff.vim'
@@ -53,14 +52,23 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'wsdjeg/vim-fetch'
 Plugin 'mbbill/undotree'
 Plugin 'chrisbra/Recover.vim'
-Plugin 'vim-syntastic/syntastic'
+" Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
 Plugin 'airblade/vim-rooter'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'vim-airline/vim-airline'
+" Plugin 'vim-airline/vim-airline-themes'
 
-let g:airline_theme='solarized_flood'
+" let g:airline_theme='solarized_flood'
+" let g:airline#extensions#branch#format = 2
+" let g:airline#extensions#default#section_truncate_width = {
+"       \ 'b': 140,
+"       \ 'x': 60,
+"       \ 'y': 88,
+"       \ 'z': 45,
+"       \ 'warning': 140,
+"       \ 'error': 140,
+"       \ }
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 call vundle#end()            " required
@@ -97,6 +105,9 @@ set noshowmode
 "
 """""""""""""""""""""""""
 
+set diffopt+=iwhite
+
+set diffexpr=""
 nnoremap ; :
 noremap <Up> <NOP>
 noremap <Down> <NOP>
@@ -177,6 +188,21 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 " fugitive git bindings
 nnoremap <leader>ga :Git add %:p<CR><CR>
 nnoremap <leader>gs :Gstatus<CR>
@@ -435,17 +461,17 @@ if executable('ag')
   " ag is fast enough that CtrlP doesn't need to cache
   let g:ctrlp_use_caching = 0
 endif
-command! -bang -nargs=+ -complete=dir Ag
-  \ call fzf#vim#ag(<q-args>,
-  \                 <bang>0 ? fzf#vim#with_preview('up:60%')
-  \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
-  \                 <bang>0)
+" command! -bang -nargs=+ -complete=dir Ag
+"   \ call fzf#vim#ag(<q-args>, '--color-path "33;1"',
+"   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
+"   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
+"   \                 <bang>0)
 if executable('ag')
   let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
 endif
 " command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, <bang>0)
 " command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>, fzf#wrap('ag-raw',
-command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw(<q-args>,
+command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)

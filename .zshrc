@@ -29,7 +29,7 @@ alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
 alias ag='ag --path-to-ignore ~/.ignore'
 alias edithistory="vim ~/.zsh_history"
-function viag () { vim -c "Ack! $*" }
+function viag () { vim -c "Ag $*" }
 alias vimag="viag"
 alias gvim="git vim"
 alias pe='~/go/bin/path-extractor'
@@ -75,14 +75,11 @@ if [[ -o HIST_FIND_NO_DUPS ]]; then
     _history_substring_search_matches=(${(@no)unique_matches})
 fi
 
-# Path to your oh-my-zsh installation.
-export ZSH=${HOME}/.oh-my-zsh
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
 POWERLEVEL9K_MODE='nerdfont-complete'
 POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable vcs newline os_icon)
@@ -107,28 +104,7 @@ POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='black'
 POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='green'
 
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-    vi-mode
-    z
-    bundler
-    dotenv
-    osx
-    rake
-    rbenv
-    ruby
-    git
-)
 export KEYTIMEOUT=10
-source $ZSH/oh-my-zsh.sh
 
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
   alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
@@ -213,37 +189,38 @@ else
     export LSCOLORS
 fi
 
-zle -N zle-keymap-select
-function zle-keymap-select zle-line-init
-{
-    # change cursor shape in iTerm2
-    if [[ -z $TMUX ]]; then
-        case $KEYMAP in
-            vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
-            viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
-        esac
-    else
-        case $KEYMAP in
-            # printf "\033Ptmux;\033\033[2 q\033\\"
-            vicmd)      print -n -- "\EPtmux;\E\E]50;CursorShape=0\x7\E\\";;  # block cursor
-            viins|main) print -n -- "\EPtmux;\E\E]50;CursorShape=1\x7\E\\";;  # line cursor
-        esac
-    fi
+#   I moved this stuff to prezto
+# zle -N zle-keymap-select
+# function zle-keymap-select zle-line-init
+# {
+#     # change cursor shape in iTerm2
+#     if [[ -z $TMUX ]]; then
+#         case $KEYMAP in
+#             vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
+#             viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
+#         esac
+#     else
+#         case $KEYMAP in
+#             # printf "\033Ptmux;\033\033[2 q\033\\"
+#             vicmd)      print -n -- "\EPtmux;\E\E]50;CursorShape=0\x7\E\\";;  # block cursor
+#             viins|main) print -n -- "\EPtmux;\E\E]50;CursorShape=1\x7\E\\";;  # line cursor
+#         esac
+#     fi
 
-    zle reset-prompt
-    zle -R
-}
+#     zle reset-prompt
+#     zle -R
+# }
 
-function zle-line-finish
-{
-    print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
-}
+# function zle-line-finish
+# {
+#     print -n -- "\E]50;CursorShape=0\C-G"  # block cursor
+# }
 
-zle -N zle-line-init
-zle -N zle-line-finish
-zle -N zle-keymap-select
-zstyle ':completion:*' special-dirs true
-zle -N zle-line-init
+# zle -N zle-line-init
+# zle -N zle-line-finish
+# # zle -N zle-keymap-select
+# zstyle ':completion:*' special-dirs true
+# zle -N zle-line-init
 bindkey -a '^[[3~' delete-char
 bindkey '^[[3~' delete-char
 # bindkey -M viins '^R' history-incremental-search-backward
@@ -252,7 +229,6 @@ bindkey -M vicmd '^R' history-incremental-search-backward
 bindkey -M vicmd '^V' edit-command-line
 bindkey -M vicmd 'v' vi-cmd-mode
 bindkey jk vi-cmd-mode
-source ${HOME}/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias grep="grep --color=auto"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
@@ -294,5 +270,9 @@ z() {
   [ $# -gt 0 ] && _z "$*" && return
   cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
+eval "$(fasd --init auto)"
 set -o vi
+source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+unalias rm
+unsetopt CORRECT 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
