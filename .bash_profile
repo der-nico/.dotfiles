@@ -3,6 +3,9 @@
 # -f tests if file exists, therefore only start zsh if executable is there.
 if [ -f "$HOME/bin/zsh-5.4.2" ]; then
     export SHELL=~/bin/zsh-5.4.2
+    if [ -f ~/.zprofile ]; then
+        . ~/.zprofile
+    fi
     ~/bin/zsh-5.4.2
     # Exit from bash immediately when I quit zsh.
     if [ $? -eq 0 ]; then
@@ -11,6 +14,9 @@ if [ -f "$HOME/bin/zsh-5.4.2" ]; then
 fi
 if [ -f "$HOME/bin/zsh-5.2" ]; then
     export SHELL=~/bin/zsh-5.2
+    if [ -f ~/.zprofile ]; then
+        . ~/.zprofile
+    fi
     ~/bin/zsh-5.2
     # Exit from bash immediately when I quit zsh.
     if [ $? -eq 0 ]; then
@@ -23,6 +29,7 @@ export PATH="$HOME/bin:$PATH"
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     export PATH="$HOME/neovim/bin:$PATH"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
+    export RUCIO_ACCOUNT="nscharmb"
     if [ ${HOST:0:6} = "lxplus" ]; then
         # set TEX directory for lxplus
         export PATH="/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH"

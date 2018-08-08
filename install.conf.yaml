@@ -2,7 +2,6 @@
     link:
       relink: true
 
-- clean: ['~', '~/.oh-my-zsh/custom/', '~/.oh-my-zsh/custom/plugins/']
 - shell:
     - git submodule update --init --recursive
     - mkdir -p ~/.config/nvim
@@ -17,12 +16,10 @@
     ~/.tmux.conf: tmux.conf
     ~/.bash_profile: .bash_profile
     ~/.zprofile: .zprofile
+    ~/.zpreztorc: .zpreztorc
     ~/.bashrc: .bashrc
     ~/.zshrc: .zshrc
     ~/zsh-syntax-highlighting: zsh-syntax-highlighting
-    ~/.oh-my-zsh: .oh-my-zsh
-    ~/.oh-my-zsh/custom/better_completion.zsh: .oh-my-zsh-custom/better_completion.zsh
-    ~/.oh-my-zsh/custom/themes/powerlevel9k: .oh-my-zsh-custom/themes/powerlevel9k
     ~/bin/ack : ack
     ~/bin/ag : ag
 
