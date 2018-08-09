@@ -32,6 +32,13 @@ alias edithistory="vim ~/.zsh_history"
 function viag () { vim -c "Ag $*" }
 alias vimag="viag"
 alias gvim="git vim"
+#### Somehow breaks prompt
+# gvim() {
+#   local files
+#   IFS=$'\n' files=`git diff --name-status $1 | fzf --height 20% -x -m --ansi | awk '{ print $2 }'`
+#   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+# }
+
 alias pe='~/go/bin/path-extractor'
 tmux_helper(){
  print -z vim $a
@@ -192,7 +199,7 @@ fi
 # zle -N zle-line-init
 # zle -N zle-line-finish
 # # zle -N zle-keymap-select
-# zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' special-dirs true
 # zle -N zle-line-init
 bindkey -a '^[[3~' delete-char
 bindkey '^[[3~' delete-char

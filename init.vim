@@ -16,6 +16,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'tpope/vim-markdown'
 " Plugin 'tpope/vim-sensible' " I have to check this actually helps me
+Plugin 'airblade/vim-gitgutter'
 Plugin 'vim-scripts/ReplaceWithRegister'
 Plugin 'AndrewRadev/switch.vim'
 Plugin 'parnmatt/vim-root'
@@ -56,19 +57,19 @@ Plugin 'chrisbra/Recover.vim'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
 Plugin 'airblade/vim-rooter'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
-" let g:airline_theme='solarized_flood'
-" let g:airline#extensions#branch#format = 2
-" let g:airline#extensions#default#section_truncate_width = {
-"       \ 'b': 140,
-"       \ 'x': 60,
-"       \ 'y': 88,
-"       \ 'z': 45,
-"       \ 'warning': 140,
-"       \ 'error': 140,
-"       \ }
+let g:airline_theme='solarized_flood'
+let g:airline#extensions#branch#format = 2
+let g:airline#extensions#default#section_truncate_width = {
+      \ 'b': 140,
+      \ 'x': 60,
+      \ 'y': 88,
+      \ 'z': 45,
+      \ 'warning': 140,
+      \ 'error': 140,
+      \ }
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 call vundle#end()            " required
