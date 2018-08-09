@@ -12,12 +12,12 @@ if [ -f "$HOME/bin/zsh-5.4.2" ]; then
         exit
     fi
 fi
-if [ -f "$HOME/bin/zsh-5.2" ]; then
-    export SHELL=~/bin/zsh-5.2
+if [ -f "$HOME/bin/zsh-5.5.1" ]; then
+    export SHELL=~/bin/zsh-5.5.1
     if [ -f ~/.zprofile ]; then
         . ~/.zprofile
     fi
-    ~/bin/zsh-5.2
+    ~/bin/zsh-5.5.1
     # Exit from bash immediately when I quit zsh.
     if [ $? -eq 0 ]; then
         exit
