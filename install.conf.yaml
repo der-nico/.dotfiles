@@ -5,6 +5,7 @@
 - shell:
     - git submodule update --init --recursive
     - mkdir -p ~/.config/nvim
+    - mkdir -p ~/.config/nvim/autoload/airline/themes
     - mkdir -p ~/bin
     - git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim || true
     - cd  ~/.config/nvim/bundle/Vundle.vim
@@ -13,6 +14,7 @@
 - link:
     ~/.config/nvim/init.vim: init.vim
     ~/.config/nvim/filetype.vim: filetype.vim
+    ~/.config/nvim/autoload/airline/themes/test.vim: test.vim
     ~/.tmux.conf: tmux.conf
     ~/.bash_profile: .bash_profile
     ~/.zprofile: .zprofile
