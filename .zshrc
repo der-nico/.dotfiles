@@ -85,33 +85,6 @@ fi
 
 ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-POWERLEVEL9K_MODE='nerdfont-complete'
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(anaconda context dir rbenv dir_writable vcs newline os_icon)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs command_execution_time status vi_mode)
-POWERLEVEL9K_STATUS_VERBOSE=false
-POWERLEVEL9K_PYTHON_ICON=''
-POWERLEVEL9K_ANACONDA_BACKGROUND='black'
-POWERLEVEL9K_ANACONDA_FOREGROUND='cyan'
-# Advanced `vcs` color customization
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='red'
-
-# Advanced `vi_mode` color customization
-# Vi-Mode
-POWERLEVEL9K_VI_MODE_INSERT_FOREGROUND='black'
-POWERLEVEL9K_VI_MODE_INSERT_BACKGROUND='cyan'
-POWERLEVEL9K_VI_MODE_NORMAL_FOREGROUND='black'
-POWERLEVEL9K_VI_MODE_NORMAL_BACKGROUND='green'
-
-
 export KEYTIMEOUT=10
 
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
@@ -191,7 +164,7 @@ else
     alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
     alias mountlxplus="sshfs -o allow_other,defer_permissions nscharmb@lxplus.cern.ch: mount/"
     alias mounteve="sshfs -o allow_other,defer_permissions nscharmb@eve.e5.physik.tu-dortmund.de: mount/"
-    alias vim="~/./nvim-osx64/bin/nvim"
+    # alias vim="~/./nvim-osx64/bin/nvim"
     alias ls="ls -G"
     LSCOLORS="exfxcxdxbxegedabagacad"
     export LSCOLORS

@@ -5,3 +5,4 @@
 [submodule "prezto"]
 	path = prezto
 	url = https://github.com/der-nico/prezto.git
+	branch = master

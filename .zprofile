@@ -1,5 +1,9 @@
 # .zprofile
 
+
+# PATHCOLOR="26"        # lxplus
+# PATHCOLOR="208"       # local
+# PATHCOLOR="54"        # manchester
 if [ -z ${HOST+x} ]; then export HOST=$HOSTNAME; fi
 export PATH="$HOME/bin:$PATH"
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
@@ -12,14 +16,17 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
         export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
         export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
         export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
+        export PATHCOLOR="26"        # lxplus
     else
         export PATH="$PATH:$HOME/local/bin"
         export ATLAS_LOCAL_ROOT_BASE="/cvmfs/atlas.cern.ch/repo/ATLASLocalRootBase"
+        export PATHCOLOR="54"        # manchester
     fi
 else
     export PATH="$HOME/nvim-osx64/bin:$PATH"
-    export PATH="/Users/nicolasscharmberg/anaconda3/bin:$PATH"
-    export ConndaPYTHONPATHMAIN="/Users/nicolasscharmberg/anaconda3/bin/python"
-    export ConndaPYTHON3PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim3/bin/python"
-    export ConndaPYTHON2PATH="/Users/nicolasscharmberg/anaconda3/envs/neovim2/bin/python"
+    export PATH="$HOME/anaconda3/bin:$PATH"
+    export ConndaPYTHONPATHMAIN="$HOME/anaconda3/bin/python"
+    export ConndaPYTHON3PATH="$HOME/anaconda3/envs/neovim3/bin/python"
+    export ConndaPYTHON2PATH="$HOME/anaconda3/envs/neovim2/bin/python"
+    export PATHCOLOR="208"        # local
 fi
