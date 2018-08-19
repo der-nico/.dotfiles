@@ -45,7 +45,8 @@ tmux_helper(){
 }
 
 alias pp_test="tmux capture-pane -p -S -3000 > $HOME/step_1.txt; tac $HOME/step_1.txt | grep '.' > $HOME/step_2.txt; cat $HOME/step_2.txt | grep -v ' \\$ ' > $HOME/step_3.txt; cat $HOME/step_3.txt | grep -v ' \\\$\$' > $HOME/step_4.txt; cat $HOME/step_4.txt | grep -v ^' 'nscharmb > $HOME/step_5.txt; cat $HOME/step_5.txt | pe >$HOME/tmux-buffer ; cat -n $HOME/tmux-buffer > $HOME/step_6.txt; cat $HOME/step_6.txt | sort -uk2 > $HOME/step_7.txt; cat $HOME/step_7.txt | sort -nk1 > $HOME/step_8.txt; cat $HOME/step_8.txt | cut -f2- > $HOME/tmux-buffer; cat $HOME/tmux-buffer > $HOME/step_9.txt; cat $HOME/step_9.txt | ag --nobreak --nonumbers --noheading . > $HOME/step_10.txt; cat $HOME/step_10.txt | fzf --height 20% > $HOME/step_11.txt; cat $HOME/step_11.txt | xargs echo -n > $HOME/step_12.txt; cat $HOME/step_12.txt | read a ; tmux_helper"
-alias pp="tmux capture-pane -p -S -3000 > $HOME/tmux-buffer; tac $HOME/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >$HOME/tmux-buffer ; cat -n $HOME/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > $HOME/tmux-buffer; cat $HOME/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
+# alias pp="tmux capture-pane -p -S -3000 > $HOME/tmux-buffer; tac $HOME/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >$HOME/tmux-buffer ; cat -n $HOME/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > $HOME/tmux-buffer; cat $HOME/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
+alias pp="tmux capture-pane -S -3000 && tmux save-buffer $HOME/tmux-buffer && tac $HOME/tmux-buffer > $HOME/tmux-buffer_rev && cat -n $HOME/tmux-buffer_rev | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v '' | sort -uk2 | sort -nk1 | pe | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
 
 
 
@@ -282,4 +283,5 @@ source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 eval "$(fasd --init auto)"
 unalias rm
 unsetopt CORRECT 
+setopt clobber
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
