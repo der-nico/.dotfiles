@@ -60,16 +60,70 @@ Plugin 'airblade/vim-rooter'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-let g:airline_theme='solarized_flood'
 let g:airline#extensions#branch#format = 2
+let g:airline_theme='test'
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'V',
+    \ '' : 'V',
+    \ 's'  : 'S',
+    \ }
+" let g:airline#extensions#branch#format = 2
 let g:airline#extensions#default#section_truncate_width = {
-      \ 'b': 140,
-      \ 'x': 60,
+      \ 'a': 4,
+      \ 'b': 50,
+      \ 'c': 10,
+      \ 'x': 150,
       \ 'y': 88,
-      \ 'z': 45,
-      \ 'warning': 140,
-      \ 'error': 140,
+      \ 'z': 30,
+      \ 'warning': 150,
+      \ 'error': 150,
       \ }
+
+" airline symbols
+let g:airline_symbols = {}
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+let g:airline#extensions#hunks#non_zero_only = 1
+let g:airline_skip_empty_sections = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" let g:airline_section_a       = '%#__accent_bold#%{airline#util#wrap(airline#parts#mode(),0)}%#__restore__#%{airline#util#append(airline#parts#crypt(),0)}%{airline#util#append(airline#parts#paste(),0)}%{airline#util#append(airline#extensions#keymap#status(),0)}%{airline#util#append(airline#parts#spell(),0)}%{airline#util#append("",0)}%{airline#util#append("",0)}%{airline#util#append(airline#parts#iminsert(),0)}'
+let g:airline_section_b = '%{airline#util#wrap(airline#extensions#branch#get_head(),0)}'
+" let g:airline_section_c       = '%<%<%{airline#extensions#fugitiveline#bufname()}%m %#__accent_red#%{airline#util#wrap(airline#parts#readonly(),0)}%#__restore__#'
+" let g:airline_section_gutter  = '%='
+" let g:airline_section_x       = '%{airline#util#prepend("",0)}%{airline#util#prepend("",0)}%{airline#util#wrap(airline#parts#filetype(),0)}'
+let g:airline_section_y       = '%{airline#util#wrap(airline#extensions#hunks#get_hunks(),0)}%{airline#util#wrap(airline#parts#ffenc(),0)}'
+let g:airline_section_z       = '%3l/%L:%3v'
+" let g:airline_section_z       = 'f_r(40/1008)%3l/%L:%3v'
+" let g:airline_section_z       = '%{g:airline_symbols.linenr}%4l%#__restore__#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%3v'
+" let g:airline_section_error   = '%{airline#util#wrap(airline#extensions#neomake#get_errors(),0)}<Paste>'
+" let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#neomake#get_warnings(),0)}%{airline#util#wrap(airline#extensions#whitespace#check(),0)}'
+
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 call vundle#end()            " required
@@ -443,9 +497,9 @@ set foldtext=NeatFoldText()
 
 
 function! Fold_all()
-	set foldmethod=indent
-	set foldlevel=1
-	set foldclose=all
+set foldmethod=indent
+set foldlevel=1
+set foldclose=all
 endfunction
 command Fold execute "Fold_all()"
 nnoremap <C-W>O :call MaximizeToggle()<CR>
