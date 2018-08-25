@@ -201,6 +201,7 @@ fi
 # zle -N zle-line-finish
 # # zle -N zle-keymap-select
 zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' accept-exact-dirs true
 # zle -N zle-line-init
 bindkey -a '^[[3~' delete-char
 bindkey '^[[3~' delete-char
@@ -255,6 +256,16 @@ set -o vi
 source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 eval "$(fasd --init auto)"
 unalias rm
+# Case-insensitive (all), partial-word, and then substring completion.
+if zstyle -t ':prezto:module:completion:*' case-sensitive; then
+  zstyle ':completion:*' matcher-list '' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+  setopt CASE_GLOB
+else
+  zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+  unsetopt CASE_GLOB
+fi
+#Otherwise zsh suggest all users which is super annoying
+zstyle ':completion:*' users
 unsetopt CORRECT 
 setopt clobber
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
