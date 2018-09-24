@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-dsdsdsdsdedand
-dsdji
 
 
 djsdkjdskd
 e
-=======
-Test 
-dksd s
-
->>>>>>> refs/remotes/origin/master
