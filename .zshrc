@@ -203,14 +203,6 @@ fi
 zstyle ':completion:*' special-dirs true
 zstyle ':completion:*' accept-exact-dirs true
 # zle -N zle-line-init
-bindkey -a '^[[3~' delete-char
-bindkey '^[[3~' delete-char
-# bindkey -M viins '^R' history-incremental-search-backward
-bindkey -M vicmd '^R' history-incremental-search-backward
-# bindkey -M vicmd 'v' edit-command-line
-bindkey -M vicmd '^V' edit-command-line
-bindkey -M vicmd 'v' vi-cmd-mode
-bindkey jk vi-cmd-mode
 
 alias grep="grep --color=auto"
 zstyle ':completion:*' list-colors "${(@s.:.)LS_COLORS}"
@@ -269,3 +261,12 @@ zstyle ':completion:*' users
 unsetopt CORRECT 
 setopt clobber
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+bindkey -a '^[[3~' delete-char
+bindkey '^[[3~' delete-char
+# bindkey -M viins '^R' history-incremental-search-backward
+bindkey -M vicmd '^R' history-incremental-search-backward
+# bindkey -M vicmd 'v' edit-command-line
+bindkey -M vicmd '^V' edit-command-line
+bindkey -M vicmd 'v' vi-cmd-mode
+bindkey jk vi-cmd-mode

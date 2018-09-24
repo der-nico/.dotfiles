@@ -59,8 +59,9 @@ Plugin 'chrisbra/Recover.vim'
 Plugin 'airblade/vim-rooter'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
+" Plugin 'itchyny/lightline.vim'
 
-let g:airline#extensions#branch#format = 2
+
 let g:airline_theme='test'
 let g:airline_mode_map = {
     \ '__' : '-',
@@ -123,6 +124,8 @@ let g:airline_section_z       = '%3l/%L:%3v'
 " let g:airline_section_z       = '%{g:airline_symbols.linenr}%4l%#__restore__#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%3v'
 " let g:airline_section_error   = '%{airline#util#wrap(airline#extensions#neomake#get_errors(),0)}<Paste>'
 " let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#neomake#get_warnings(),0)}%{airline#util#wrap(airline#extensions#whitespace#check(),0)}'
+let g:airline#extensions#branch#format = 0
+" let g:airline#extensions#branch#displayed_head_limit=30
 
 let g:vim_textobj_parameter_mapping = 'b'
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -293,7 +296,9 @@ set tags=./tags;,tags;,/afs/cern.ch/user/n/nscharmb/private/python/tags;
 "   Format settings
 "
 """""""""""""""""""""""""
-autocmd FileType config setlocal commentstring=%\ %s
+set formatoptions-=cro
+autocmd BufNewFile,BufRead    *.txt     set ft=config
+" autocmd FileType config setlocal commentstring=%\ %s
 autocmd FileType cpp setlocal commentstring=//\ %s
 autocmd FileType text setlocal commentstring=#\ %s
 " Use spaces instead of tabs
@@ -495,6 +500,8 @@ endfunction
 
 set foldtext=NeatFoldText()
 
+nnoremap <Leader>L :<C-u>execute 'file '.fnameescape(resolve(expand('%:p')))<bar>
+    \ call fugitive#detect(fnameescape(expand('%:p:h')))<CR>
 
 function! Fold_all()
 set foldmethod=indent
