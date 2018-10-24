@@ -92,7 +92,7 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
   alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
   alias setupQC="source ~/private/tools/setup/SetupQC.sh"
   alias ls="ls --color=auto"
-  LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:"
+  LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=30;43:"
   export LS_COLORS
   scpo() {
       save_path="macbook:tmp/"
@@ -141,13 +141,17 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     function setupafs {
       kinit nscharmb@CERN.CH;
       aklog -cell cern.ch;
-      echo -e "Setting TEX environment";
-      # set TEX directory for lxplus
-      export PATH="/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH"
-      echo -e "Setting conda python pathes for nvim";
-      export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
-      export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
-      export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
+      if [ -r /afs/cern.ch/user/n/nscharmb/.bash_profile ]; then
+        echo -e "Setting LXPLUS path to my homedirectory on lxplus";
+        export LXPLUS="/afs/cern.ch/user/n/nscharmb"
+        echo -e "Setting TEX environment";
+        # set TEX directory for lxplus
+        export PATH="/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH"
+        echo -e "Setting conda python pathes for nvim";
+        export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
+        export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"
+        export ConndaPYTHON2PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim2/bin/python"
+      fi
     }
     # export PATH="$PATH:/afs/cern.ch/work/n/nscharmb/anaconda3/bin/"
     alias setupATLAS='source ${ATLAS_LOCAL_ROOT_BASE}/user/atlasLocalSetup.sh'

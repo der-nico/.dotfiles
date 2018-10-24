@@ -1,5 +1,10 @@
 # .bashrc
 
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+    *) return;;
+esac
 # Source global definitions
 if [ -f /etc/bashrc ]; then
 	. /etc/bashrc
