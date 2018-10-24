@@ -1,5 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+set guioptions=M
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.fzf
 set rtp+=/usr/local/opt/fzf
@@ -14,55 +15,53 @@ if dein#load_state('~/.cache/dein')
  call dein#begin('~/.cache/dein')
 
  call dein#add('~/.cache/dein')
- call dein#add('VundleVim/Vundle.vim')
- call dein#add('tpope/vim-commentary')
- call dein#add('tpope/vim-fugitive')
- call dein#add('tpope/vim-surround')
- " call dein#add('tpope/vim-unimpaired')
+ call dein#add('tpope/vim-commentary', {'on_map': {'xo' : ['gc']}})
+ call dein#add('tpope/vim-fugitive', { 'on_cmd': [ 'Git', 'Gstatus', 'Gwrite', 'Glog', 'Gcommit', 'Gblame', 'Ggrep', 'Gdiff', ] })
+ call dein#add('tpope/vim-surround', {'on_map': {'n' : ['cs', 'ds', 'ys'], 'x' : 'S'}, 'depends' : 'vim-repeat'})
+ call dein#add('tpope/vim-unimpaired')
  call dein#add('tpope/vim-sleuth')
- call dein#add('tpope/vim-speeddating')
+ " call dein#add('tpope/vim-speeddating', {'on_map': {'xo' : ['il', 'al']}})     
  call dein#add('tpope/vim-repeat')
  call dein#add('tpope/vim-rhubarb')
  call dein#add('tpope/vim-markdown')
 " Plugin 'tpope/vim-sensible' " I have to check this actually helps me
  call dein#add('airblade/vim-gitgutter')
- call dein#add('vim-scripts/ReplaceWithRegister')
- call dein#add('AndrewRadev/switch.vim')
+ call dein#add('vim-scripts/ReplaceWithRegister', {'on_map': {'xo' : ['gr']}})
+ call dein#add('AndrewRadev/switch.vim', {'on_map': {'xo' : ['gs']}})
 " Plugin 'parnmatt/vim-root'
  call dein#add('kana/vim-textobj-user')
- call dein#add('kana/vim-textobj-line')
- " call dein#add('tkhren/vim-textobj-numeral')
- call dein#add('Julian/vim-textobj-variable-segment')
+ call dein#add('kana/vim-textobj-line', {'on_map': {'xo' : ['il', 'al']}})
+ call dein#add('tkhren/vim-textobj-numeral', {'on_map': {'xo' : ['in', 'an']}})
+ call dein#add('kana/vim-textobj-entire', {'on_map': {'xo' : ['ie', 'ae']}})
+ call dein#add('Julian/vim-textobj-variable-segment', {'on_map': {'xo' : ['iv', 'av']}})
  call dein#add('michaeljsmith/vim-indent-object')
- call dein#add('sgur/vim-textobj-parameter')
+ call dein#add('sgur/vim-textobj-parameter', {'on_map': {'xo' : ['ib', 'ab']}})
  call dein#add('ervandew/supertab')
 " Plugin 'neomake/neomake'
- call dein#add('bronson/vim-visual-star-search')
+ call dein#add('bronson/vim-visual-star-search', {'on_map': {'xo' : ['*']}})
  call dein#add('Shougo/deoplete.nvim')
  call dein#add('zchee/deoplete-jedi')
 " Plugin 'davidhalter/jedi-vim'
 " Plugin 'zchee/deoplete-clang'
 " Plugin 'tweekmonster/deoplete-clang2'
  call dein#add('Shougo/echodoc.vim')
- call dein#add('tweekmonster/startuptime.vim')
+ call dein#add('tweekmonster/startuptime.vim', {'on_cmd': ['Startuptime']})
  call dein#add('junegunn/fzf.vim')
  call dein#add('mileszs/ack.vim')
- call dein#add('AndrewRadev/linediff.vim')
+ call dein#add('AndrewRadev/linediff.vim', {'on_cmd': ['Linediff']})
  call dein#add('vim-scripts/AnsiEsc.vim')
 " Plugin 'chrisbra/vim-zsh'
  call dein#add('ntpeters/vim-better-whitespace')
  call dein#add('tmhedberg/SimpylFold')
  call dein#add('wsdjeg/vim-fetch')
- call dein#add('mbbill/undotree')
- call dein#add('chrisbra/Recover.vim')
+ call dein#add('mbbill/undotree', {'on_cmd': ['UndotreeToggle']})
+ " call dein#add('chrisbra/Recover.vim')
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
  call dein#add('airblade/vim-rooter')
  call dein#add('vim-airline/vim-airline')
  call dein#add('vim-airline/vim-airline-themes')
- if !has('nvim')
- endif
 
  call dein#end()
  call dein#save_state()
@@ -70,6 +69,7 @@ endif
 
 filetype plugin indent on
 syntax enable
+syntax on
 
 " call vundle#begin()
 " Plugin 'VundleVim/Vundle.vim'
@@ -124,7 +124,7 @@ syntax enable
 
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
-filetype plugin indent on    " required
+" filetype plugin indent on    " required
 
 let g:syntastic_python_checkers=['flake8']
 let g:syntastic_always_populate_loc_list=1
@@ -185,6 +185,14 @@ autocmd FileType tex setlocal spell
 set wildmenu
 set wildmode=list:longest,full
 
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+if !isdirectory($HOME."/.vim/undo-dir")
+    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+endif
+set undodir=~/.vim/undo-dir
+set undofile
 
 nnoremap <leader>: :History:<CR>
 nnoremap <leader>; :History:<CR>
