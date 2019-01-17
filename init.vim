@@ -15,12 +15,12 @@ if dein#load_state('~/.cache/dein')
  call dein#begin('~/.cache/dein')
 
  call dein#add('~/.cache/dein')
- call dein#add('tpope/vim-commentary', {'on_map': {'xo' : ['gc']}})
+ call dein#add('tpope/vim-commentary', {'on_map': {'n' : ['gc']}})
  call dein#add('tpope/vim-fugitive', { 'on_cmd': [ 'Git', 'Gstatus', 'Gwrite', 'Glog', 'Gcommit', 'Gblame', 'Ggrep', 'Gdiff', ] })
  call dein#add('tpope/vim-surround', {'on_map': {'n' : ['cs', 'ds', 'ys'], 'x' : 'S'}, 'depends' : 'vim-repeat'})
  call dein#add('tpope/vim-unimpaired')
  call dein#add('tpope/vim-sleuth')
- " call dein#add('tpope/vim-speeddating', {'on_map': {'xo' : ['il', 'al']}})     
+ " call dein#add('tpope/vim-speeddating', {'on_map': {'xo' : ['il', 'al']}})
  call dein#add('tpope/vim-repeat')
  call dein#add('tpope/vim-rhubarb')
  call dein#add('tpope/vim-markdown')
@@ -464,8 +464,10 @@ endfunction
 command Fold execute "Fold_all()"
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '14%'})
 
-" The Silver Searcher
-if executable('ag')
+if executable('rg')
+  set grepprg=rg\ --vimgrep
+  let g:ackprg = 'rg -S --no-heading --vimgrep'
+elseif executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
 
@@ -478,13 +480,13 @@ if executable('ag')
   let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
 endif
 
-command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
+command! -bang -nargs=+ -complete=dir Rg call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 \ {'options': "--preview 'coderay $(cut -d: -f1 <<< {}) | sed -n $(cut -d: -f2 <<< {}),\\$p | head -".&lines."'"}))
-nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag "<C-R>=CWORD<CR>" <CR>
-autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
-autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
+nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg "<C-R>=CWORD<CR>" <CR>
+autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
+autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg --cpp "<C-R>=CWORD<CR>" <CR>
 
 nnoremap <silent> cr :<C-U><C-R><C-R>='let @' . v:register . ' = ' . string(getreg())<CR><C-F><Left>

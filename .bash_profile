@@ -1,6 +1,18 @@
 # .bash_profile
 
 # -f tests if file exists, therefore only start zsh if executable is there.
+
+if [ -f "$HOME/local/bin/zsh" ]; then
+    export SHELL=~/local/bin/zsh
+    if [ -f ~/.zprofile ]; then
+        . ~/.zprofile
+    fi
+    ~/local/bin/zsh
+    # Exit from bash immediately when I quit zsh.
+    if [ $? -eq 0 ]; then
+        exit
+    fi
+fi
 if [ -f "$HOME/bin/zsh-5.4.2" ]; then
     export SHELL=~/bin/zsh-5.4.2
     if [ -f ~/.zprofile ]; then
@@ -53,3 +65,5 @@ if [ -f ~/.bashrc ]; then
 	. ~/.bashrc
 fi
 
+
+export PATH="$HOME/.cargo/bin:$PATH"

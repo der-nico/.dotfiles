@@ -7,7 +7,7 @@
 if [ -z ${HOST+x} ]; then export HOST=$HOSTNAME; fi
 export PATH="$HOME/bin:$PATH"
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
-    export PATH="$HOME/neovim/bin:$PATH"
+    # export PATH="$HOME/neovim/bin:$PATH"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
     if [ ${HOST:0:6} = "lxplus" ]; then
         # set TEX directory for lxplus
@@ -30,3 +30,5 @@ else
     export ConndaPYTHON2PATH="$HOME/anaconda3/envs/neovim2/bin/python"
     export PATHCOLOR="208"        # local
 fi
+
+export PATH="$HOME/.cargo/bin:$PATH"
