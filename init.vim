@@ -26,8 +26,8 @@ if dein#load_state('~/.cache/dein')
  call dein#add('tpope/vim-markdown')
 " Plugin 'tpope/vim-sensible' " I have to check this actually helps me
  call dein#add('airblade/vim-gitgutter')
- call dein#add('vim-scripts/ReplaceWithRegister', {'on_map': {'xo' : ['gr']}})
- call dein#add('AndrewRadev/switch.vim', {'on_map': {'xo' : ['gs']}})
+ call dein#add('vim-scripts/ReplaceWithRegister', {'on_map': {'n' : ['gr']}})
+ call dein#add('AndrewRadev/switch.vim', {'on_map': {'n' : ['gs']}})
 " Plugin 'parnmatt/vim-root'
  call dein#add('kana/vim-textobj-user')
  call dein#add('kana/vim-textobj-line', {'on_map': {'xo' : ['il', 'al']}})
@@ -38,14 +38,15 @@ if dein#load_state('~/.cache/dein')
  call dein#add('sgur/vim-textobj-parameter', {'on_map': {'xo' : ['ib', 'ab']}})
  call dein#add('ervandew/supertab')
 " Plugin 'neomake/neomake'
- call dein#add('bronson/vim-visual-star-search', {'on_map': {'xo' : ['*']}})
+ call dein#add('bronson/vim-visual-star-search')
+ " call dein#add('bronson/vim-visual-star-search', {'on_map': {'n' : ['*']}})
  call dein#add('Shougo/deoplete.nvim')
  call dein#add('zchee/deoplete-jedi')
 " Plugin 'davidhalter/jedi-vim'
 " Plugin 'zchee/deoplete-clang'
 " Plugin 'tweekmonster/deoplete-clang2'
  call dein#add('Shougo/echodoc.vim')
- call dein#add('tweekmonster/startuptime.vim', {'on_cmd': ['Startuptime']})
+ call dein#add('tweekmonster/startuptime.vim', {'on_cmd': ['StartupTime']})
  call dein#add('junegunn/fzf.vim')
  call dein#add('mileszs/ack.vim')
  call dein#add('AndrewRadev/linediff.vim', {'on_cmd': ['Linediff']})
@@ -55,7 +56,7 @@ if dein#load_state('~/.cache/dein')
  call dein#add('tmhedberg/SimpylFold')
  call dein#add('wsdjeg/vim-fetch')
  call dein#add('mbbill/undotree', {'on_cmd': ['UndotreeToggle']})
- " call dein#add('chrisbra/Recover.vim')
+ call dein#add('chrisbra/Recover.vim')
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
@@ -243,7 +244,6 @@ set tags=./tags;,tags;,/afs/cern.ch/user/n/nscharmb/private/python/tags;
 "   Format settings
 "
 """""""""""""""""""""""""
-autocmd FileType config setlocal commentstring=%\ %s
 autocmd FileType cpp setlocal commentstring=//\ %s
 autocmd FileType text setlocal commentstring=#\ %s
 " Use spaces instead of tabs
