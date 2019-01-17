@@ -28,7 +28,8 @@ alias vim="nvim"
 alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
 alias ag='ag --path-to-ignore ~/.ignore'
-alias edithistory="vim ~/.zsh_history"
+alias rg='~/bin/rg --ignore-file ~/.ignore'
+alias edithistory="vim ~/.zhistory"
 function viag () { vim -c "Ag $*" }
 alias vimag="viag"
 alias gvim="git vim"
@@ -251,7 +252,11 @@ function color_test {
   echo
 }
 # fzf + ag configuration
-if _has fzf && _has ag; then
+if _has fzf && _has rg; then
+  export FZF_DEFAULT_COMMAND='rg --hidden --ignore-file ~/.ignore --nocolor -f -g ""'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+elif _has fzf && _has ag; then
   export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.ignore --nocolor -f -g ""'
   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
   export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
@@ -262,15 +267,17 @@ z() {
   cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
 set -o vi
-source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+source "${ZDOTDIR:-$SECONDHOME}/.zprezto/init.zsh"
 eval "$(fasd --init auto)"
 unalias rm
 # Case-insensitive (all), partial-word, and then substring completion.
 if zstyle -t ':prezto:module:completion:*' case-sensitive; then
-  zstyle ':completion:*' matcher-list '' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+  zstyle ':completion:*' matcher-list '' 'r:|[._-]=*'
+  # zstyle ':completion:*' matcher-list '' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   setopt CASE_GLOB
 else
-  zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+  zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=*'
+  # zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
   unsetopt CASE_GLOB
 fi
 #Otherwise zsh suggest all users which is super annoying

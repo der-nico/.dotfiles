@@ -48,6 +48,7 @@ if dein#load_state('~/.cache/dein')
  call dein#add('Shougo/echodoc.vim')
  call dein#add('tweekmonster/startuptime.vim', {'on_cmd': ['StartupTime']})
  call dein#add('junegunn/fzf.vim')
+ call dein#add('junegunn/vim-easy-align')
  call dein#add('mileszs/ack.vim')
  call dein#add('AndrewRadev/linediff.vim', {'on_cmd': ['Linediff']})
  call dein#add('vim-scripts/AnsiEsc.vim')
@@ -57,6 +58,7 @@ if dein#load_state('~/.cache/dein')
  call dein#add('wsdjeg/vim-fetch')
  call dein#add('mbbill/undotree', {'on_cmd': ['UndotreeToggle']})
  call dein#add('chrisbra/Recover.vim')
+ call dein#add('chrisbra/NrrwRgn')
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
@@ -71,57 +73,6 @@ endif
 filetype plugin indent on
 syntax enable
 syntax on
-
-" call vundle#begin()
-" Plugin 'VundleVim/Vundle.vim'
-" Plugin 'tpope/vim-commentary'
-" Plugin 'tpope/vim-fugitive'
-" Plugin 'tpope/vim-surround'
-" Plugin 'tpope/vim-unimpaired'
-" Plugin 'tpope/vim-sleuth'
-" Plugin 'tpope/vim-speeddating'
-" Plugin 'tpope/vim-repeat'
-" Plugin 'tpope/vim-rhubarb'
-" Plugin 'tpope/vim-markdown'
-" " Plugin 'tpope/vim-sensible' " I have to check this actually helps me
-" Plugin 'airblade/vim-gitgutter'
-" Plugin 'vim-scripts/ReplaceWithRegister'
-" Plugin 'AndrewRadev/switch.vim'
-" " Plugin 'parnmatt/vim-root'
-" Plugin 'kana/vim-textobj-user'
-"     Plugin 'kana/vim-textobj-line'
-"     " Plugin 'tkhren/vim-textobj-numeral'
-"     Plugin 'Julian/vim-textobj-variable-segment'
-"     Plugin 'michaeljsmith/vim-indent-object'
-"     Plugin 'sgur/vim-textobj-parameter'
-" Plugin 'ervandew/supertab'
-" " Plugin 'neomake/neomake'
-" Plugin 'bronson/vim-visual-star-search'
-" Plugin 'Shougo/deoplete.nvim'
-" Plugin 'zchee/deoplete-jedi'
-" " Plugin 'davidhalter/jedi-vim'
-" " Plugin 'zchee/deoplete-clang'
-" " Plugin 'tweekmonster/deoplete-clang2'
-" Plugin 'Shougo/echodoc.vim'
-" Plugin 'tweekmonster/startuptime.vim'
-" Plugin 'junegunn/fzf.vim'
-" Plugin 'mileszs/ack.vim'
-" Plugin 'AndrewRadev/linediff.vim'
-" Plugin 'vim-scripts/AnsiEsc.vim'
-" " Plugin 'chrisbra/vim-zsh'
-" Plugin 'ntpeters/vim-better-whitespace'
-" Plugin 'tmhedberg/SimpylFold'
-" Plugin 'wsdjeg/vim-fetch'
-" Plugin 'mbbill/undotree'
-" Plugin 'chrisbra/Recover.vim'
-" " Plugin 'vim-syntastic/syntastic'
-" " Plugin 'tell-k/vim-autopep8'
-" " Plugin 'nvie/vim-flake8'
-" Plugin 'airblade/vim-rooter'
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
-" call vundle#end()            " required
-
 
 
 let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -159,7 +110,6 @@ noremap <Right> <NOP>
 let mapleader=','
 inoremap jj <ESC>
 inoremap jk <ESC>
-set viminfo='20,<50,s10
 " Ignore compiled files
  set wildignore=*.o,*~,*.pyc,*.so,*.d
 " Configure backspace so it acts as it should act
@@ -186,13 +136,22 @@ autocmd FileType tex setlocal spell
 set wildmenu
 set wildmode=list:longest,full
 
-if !isdirectory($HOME."/.vim")
-    call mkdir($HOME."/.vim", "", 0770)
+if isdirectory($SECONDHOME)
+  let g:home = $SECONDHOME
+  set shada='20,<50,s10,n$SECONDHOME/.vim/main.shada
+else
+  let g:home = $HOME
+  set shada='20,<50,s10,n$HOME/.vim/main.shada
 endif
-if !isdirectory($HOME."/.vim/undo-dir")
-    call mkdir($HOME."/.vim/undo-dir", "", 0700)
+
+if !isdirectory(g:home . "/.vim")
+    call mkdir(g:home . "/.vim", "", 0770)
 endif
-set undodir=~/.vim/undo-dir
+if !isdirectory(g:home . "/.vim/undo-dir")
+    call mkdir(g:home . "/.vim/undo-dir", "", 0700)
+endif
+execute "set undodir=" . g:home . "/.vim/undo-dir"
+
 set undofile
 
 nnoremap <leader>: :History:<CR>
@@ -252,13 +211,17 @@ set expandtab
 set smarttab
 set shiftwidth=4
 set tabstop=4
-set tabstop=4
 autocmd Filetype cpp setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 autocmd Filetype c setlocal expandtab tabstop=2 shiftwidth=2 softtabstop=2
 inoremap <expr> <TAB> pumvisible() ? "\<C-y>" : "\<CR>"
 " inoremap <expr> <Esc> pumvisible() ? "\<C-e>" : "\<Esc>"
 " inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
 " inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
+" " Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 
 
@@ -393,6 +356,7 @@ function! s:SpecialChange(type,...) abort
         startinsert  " `i`
     endif
 endfunction
+nmap gq <Plug>(GoAppend)
 
 """""""""""""""""""
 "   Switch cases
@@ -457,34 +421,90 @@ endfunction
 set foldtext=NeatFoldText()
 
 function! Fold_all()
-set foldmethod=indent
-set foldlevel=1
-set foldclose=all
+  set foldmethod=indent
+  set foldlevel=1
+  set foldclose=all
 endfunction
 command Fold execute "Fold_all()"
 inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '14%'})
 
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+function! GetPythonPaths(DIR_START)
+  let new_dict = { a:DIR_START: "" }
+  let DIRS = split(substitute($PYTHONPATH, ":", " ", "g"), " ")
+  " echo DIRS
+  for file in DIRS
+    " echo file
+    if !empty(glob(file)) && file[:5] != "/cvmfs" && len(file) > 0
+      let addfile = "y"
+      for file_2 in keys(new_dict)
+        if len(file) > len(file_2)
+          if file[:len(file_2)-1] == file_2
+            let addfile = "n"
+          endif
+        elseif len(file) < len(file_2)
+          if file_2[:len(file)-1] == file
+            let new_dict[file] = ""
+            unlet new_dict[file_2]
+          endif
+        endif
+      endfor
+      if addfile == "y"
+        let new_dict[file] = ""
+      endif
+    endif
+  endfor
+  let DIR_EXTRA = ""
+  for file in keys(new_dict)
+    let DIR_EXTRA .= " ".file
+  endfor
+  return DIR_EXTRA
+endfunction
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:nrrw_rgn_nohl=1
+function! Nr_return(...)
+  if !exists("*nrrwrgn#NrrwRgnStatus()") || empty(nrrwrgn#NrrwRgnStatus())
+      let bufname=(get(b:, 'orig_buf', 0) ? bufname(b:orig_buf) : substitute(bufname('%'), '^Nrrwrgn_\zs.*\ze_\d\+$', submatch(0), ''))
+  else
+      let dict=nrrwrgn#NrrwRgnStatus()
+      let bufname= dict.fulname
+  endif
 
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+endfunction
 
-  let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
-endif
+command TEST execute "Nr_return()"
+
+
+command! -bang -nargs=+ -complete=dir Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --hidden --ignore-case --no-heading --color=always ' . <q-args>, 1,
+  \   <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
+  \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
+  \   <bang>0)
 
 command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 \ {'options': "--preview 'coderay $(cut -d: -f1 <<< {}) | sed -n $(cut -d: -f2 <<< {}),\\$p | head -".&lines."'"}))
-nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag "<C-R>=CWORD<CR>" <CR>
-autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
-autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
 
+" grep alternative
+if executable('rg')
+  " Use rg over ag
+  set grepprg=rg\ --nogroup\ --nocolor
+  let g:ackprg = 'rg --ignore-file ~/.ignore --vimgrep'
+  nmap K    :let CWORD = expand("<cword>") <CR> :Rg "<C-R>=CWORD<CR>" <CR>
+  autocmd FileType python nmap K :let DIR = getcwd() <CR> :let DIRS = GetPythonPaths(DIR) <CR> :let CWORD = expand("<cword>") <CR> :Rg -t py <C-R>=CWORD<CR> <C-R>=DIRS<CR> <CR>
+  autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> :Rg -t cpp "<C-R>=CWORD<CR>" <CR>
+  " " Indlcude highlighting
+  " nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg "<C-R>=CWORD<CR>" <CR>
+  " autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg -tpy <C-R>=CWORD<CR> <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
+  " autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg --cpp "<C-R>=CWORD<CR>" <CR>
+elseif executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
+  nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag "<C-R>=CWORD<CR>" <CR>
+  autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
+  autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
+endif
 nnoremap <silent> cr :<C-U><C-R><C-R>='let @' . v:register . ' = ' . string(getreg())<CR><C-F><Left>
