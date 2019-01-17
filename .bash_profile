@@ -7,18 +7,21 @@ if [ -f "/pc2014-data2/nico/bin/zsh" ]; then
         . ~/.zprofile
     fi
     /pc2014-data2/nico/bin/zsh
-    # Exit from bash immediately when I quit zsh.
+    if [ $? -eq 0 ]; then
+        exit
+    fi
+
+if [ -f "$HOME/local/bin/zsh" ]; then
+    export SHELL=~/local/bin/zsh
+    if [ -f ~/.zprofile ]; then
+        . ~/.zprofile
+    fi
+    ~/local/bin/zsh
     if [ $? -eq 0 ]; then
         exit
     fi
 fi
-if [ -f "$HOME/bin/zsh-5.5.1" ]; then
-    export SHELL=~/bin/zsh-5.5.1
-    if [ -f ~/.zprofile ]; then
-        . ~/.zprofile
-    fi
-fi
-    
+
 if [ -f "$HOME/bin/zsh-5.4.2" ]; then
     export SHELL=~/bin/zsh-5.4.2
     if [ -f ~/.zprofile ]; then
@@ -76,4 +79,3 @@ fi
 
 
 export PATH="$HOME/.cargo/bin:$PATH"
-

@@ -125,7 +125,7 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
   if [ ${HOST:0:6} = "lxplus" ]; then
     alias cdeos="/eos/user/n/nscharmb/"
     alias cdwork="/afs/cern.ch/work/n/nscharmb/"
-    alias ktmux="k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
+    alias ktmux="echo $HOST >>$HOME/tmux-sessions; k5reauth -f -i 3600 -p nscharmb -k ~/private/tools/nscharmb.keytab -- tmux"
     alias reauth="k5reauth -f -x -k ~/private/tools/nscharmb.keytab"
     setupATLAS
     lsetup git

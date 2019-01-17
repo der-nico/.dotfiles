@@ -20,7 +20,7 @@ if dein#load_state('~/.cache/dein')
  call dein#add('tpope/vim-surround', {'on_map': {'n' : ['cs', 'ds', 'ys'], 'x' : 'S'}, 'depends' : 'vim-repeat'})
  call dein#add('tpope/vim-unimpaired')
  call dein#add('tpope/vim-sleuth')
- " call dein#add('tpope/vim-speeddating', {'on_map': {'xo' : ['il', 'al']}})     
+ " call dein#add('tpope/vim-speeddating', {'on_map': {'xo' : ['il', 'al']}})
  call dein#add('tpope/vim-repeat')
  call dein#add('tpope/vim-rhubarb')
  call dein#add('tpope/vim-markdown')
@@ -459,6 +459,13 @@ function! GetPythonPaths(DIR_START)
   endfor
   return DIR_EXTRA
 endfunction
+if executable('rg')
+  set grepprg=rg\ --vimgrep
+  let g:ackprg = 'rg -S --no-heading --vimgrep'
+elseif executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+endif
 
 let g:nrrw_rgn_nohl=1
 function! Nr_return(...)
@@ -481,7 +488,7 @@ command! -bang -nargs=+ -complete=dir Rg
   \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
   \   <bang>0)
 
-command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
+command! -bang -nargs=+ -complete=dir Rg call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
@@ -507,4 +514,5 @@ elseif executable('ag')
   autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --python "<C-R>=CWORD<CR>" <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
   autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Ag --cpp "<C-R>=CWORD<CR>" <CR>
 endif
+
 nnoremap <silent> cr :<C-U><C-R><C-R>='let @' . v:register . ' = ' . string(getreg())<CR><C-F><Left>

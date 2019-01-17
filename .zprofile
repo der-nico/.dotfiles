@@ -7,7 +7,7 @@
 if [ -z ${HOST+x} ]; then export HOST=$HOSTNAME; fi
 export PATH="$HOME/bin:$PATH"
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
-    export PATH="$HOME/neovim/bin:$PATH"
+    # export PATH="$HOME/neovim/bin:$PATH"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
     export RUCIO_ACCOUNT="nscharmb"
     if [ ${HOST:0:6} = "lxplus" ]; then
@@ -38,4 +38,3 @@ else
 fi
 
 export PATH="$HOME/.cargo/bin:$PATH"
-
