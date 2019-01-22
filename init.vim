@@ -15,6 +15,7 @@ if dein#load_state('~/.cache/dein')
  call dein#begin('~/.cache/dein')
 
  call dein#add('~/.cache/dein')
+ call dein#add('tommcdo/vim-express')
  call dein#add('tpope/vim-commentary', {'on_map': {'n' : ['gc']}})
  call dein#add('tpope/vim-fugitive', { 'on_cmd': [ 'Git', 'Gstatus', 'Gwrite', 'Glog', 'Gcommit', 'Gblame', 'Ggrep', 'Gdiff', ] })
  call dein#add('tpope/vim-surround', {'on_map': {'n' : ['cs', 'ds', 'ys'], 'x' : 'S'}, 'depends' : 'vim-repeat'})
@@ -57,6 +58,7 @@ if dein#load_state('~/.cache/dein')
  call dein#add('wsdjeg/vim-fetch')
  call dein#add('mbbill/undotree', {'on_cmd': ['UndotreeToggle']})
  call dein#add('chrisbra/Recover.vim')
+ call dein#add('chrisbra/NrrwRgn')
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
