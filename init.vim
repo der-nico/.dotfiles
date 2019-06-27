@@ -25,7 +25,9 @@ if dein#load_state('~/.cache/dein')
  call dein#add('tpope/vim-rhubarb')
  call dein#add('tpope/vim-markdown')
 " Plugin 'tpope/vim-sensible' " I have to check this actually helps me
- call dein#add('airblade/vim-gitgutter')
+" git-gutter and signify do the same but signify might be faster
+ " call dein#add('airblade/vim-gitgutter')
+ call dein#add('mhinz/vim-signify')
  call dein#add('vim-scripts/ReplaceWithRegister', {'on_map': {'n' : ['gr']}})
  call dein#add('AndrewRadev/switch.vim', {'on_map': {'n' : ['gs']}})
 " Plugin 'parnmatt/vim-root'
@@ -47,6 +49,8 @@ if dein#load_state('~/.cache/dein')
 " Plugin 'tweekmonster/deoplete-clang2'
  call dein#add('Shougo/echodoc.vim')
  call dein#add('tweekmonster/startuptime.vim', {'on_cmd': ['StartupTime']})
+ call dein#add('tweekmonster/impsort.vim')
+ call dein#add('vim-python/python-syntax')
  call dein#add('junegunn/fzf.vim')
  call dein#add('junegunn/vim-easy-align')
  call dein#add('mileszs/ack.vim')
@@ -75,6 +79,7 @@ syntax enable
 syntax on
 
 
+let g:signify_disable_by_default = 1
 let g:SuperTabDefaultCompletionType = "<c-n>"
 " filetype plugin indent on    " required
 
@@ -133,15 +138,16 @@ command Form execute "normal gaii*d"
 set scrolloff=3
 set complete+=kspell
 autocmd FileType tex setlocal spell
+autocmd BufNewFile,BufRead *.xrsl set syntax=config
 set wildmenu
 set wildmode=list:longest,full
 
 if isdirectory($SECONDHOME)
   let g:home = $SECONDHOME
-  set shada='20,<50,s10,n$SECONDHOME/.vim/main.shada
+  set shada='50,<50,s10,n$SECONDHOME/.vim/main.shada
 else
   let g:home = $HOME
-  set shada='20,<50,s10,n$HOME/.vim/main.shada
+  set shada='50,<50,s10,n$HOME/.vim/main.shada
 endif
 
 if !isdirectory(g:home . "/.vim")
@@ -237,10 +243,16 @@ set number
 set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 " Show matching brackets when text indicator is over them
 set showmatch
-hi DiffText   cterm=none ctermfg=Black ctermbg=Red gui=none guifg=Black guibg=Red
-hi DiffChange cterm=none ctermfg=Black ctermbg=LightMagenta gui=none guifg=Black guibg=LightMagenta
-highlight ColorColumn ctermbg=magenta
+highlight DiffText   cterm=none ctermfg=Black ctermbg=DarkRed gui=none guifg=Black guibg=Red
+highlight DiffChange cterm=none ctermfg=Black ctermbg=Grey gui=none guifg=Black guibg=LightMagenta
+highlight DiffAdd ctermbg=DarkBlue
+highlight DiffDelete ctermbg=DarkBlue
+highlight Search ctermbg=green ctermfg=Black
+highlight Identifier cterm=none
+highlight Comment ctermfg=DarkGrey
+highlight ColorColumn ctermbg=DarkRed ctermfg=Black
 autocmd FileType python call matchadd('ColorColumn', '\%80v', 100)
+let g:python_highlight_all = 1
 set noshowmode
 
 
@@ -343,8 +355,7 @@ set splitright
 """""""""""""""""""
 nnoremap <silent> <Plug>GoAppend :set opfunc=<SID>SpecialChange<CR>g@
 silent! call repeat#set("\<Plug>GoAppend", v:val)
-d
-function! s:SpecialChange(type,...) abort
+function! s:SpecialChange(type, ...) abort
     silent exec 'normal! `]'
     while getline('.')[col('.')-1] == ' '
             silent exec 'normal! h'
@@ -418,15 +429,27 @@ function! NeatFoldText()
     return foldtextstart . repeat(foldchar, winwidth(0)-foldtextlength) . foldtextend
 endfunction
 
-set foldtext=NeatFoldText()
+" set foldtext=NeatFoldText()
 
-function! Fold_all()
-  set foldmethod=indent
-  set foldlevel=1
-  set foldclose=all
-endfunction
-command Fold execute "Fold_all()"
-inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '14%'})
+" function! Fold_all()
+"   set foldmethod=indent
+"   set foldlevel=1
+"   set foldclose=all
+" endfunction
+" command Fold execute "Fold_all()"
+" Mapping selecting mappings
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+" " Insert mode completion
+" imap <c-x><c-k> <plug>(fzf-complete-word)
+" imap <c-x><c-f> <plug>(fzf-complete-path)
+" imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+" imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" Advanced customization using autoload functions
+inoremap <expr> <c-x><c-k> fzf#vim#complete#word({'left': '15%'})
 
 function! GetPythonPaths(DIR_START)
   let new_dict = { a:DIR_START: "" }
@@ -459,10 +482,11 @@ function! GetPythonPaths(DIR_START)
   endfor
   return DIR_EXTRA
 endfunction
-if executable('rg')
-  set grepprg=rg\ --vimgrep
-  let g:ackprg = 'rg -S --no-heading --vimgrep'
-elseif executable('ag')
+" if executable('rg')
+"   set grepprg=rg\ --vimgrep
+"   let g:ackprg = 'rg -S --no-heading --vimgrep'
+" elseif executable('ag')
+if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
 endif
@@ -488,25 +512,26 @@ command! -bang -nargs=+ -complete=dir Rg
   \           : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
   \   <bang>0)
 
-command! -bang -nargs=+ -complete=dir Rg call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
+command! -bang -nargs=+ -complete=dir Ag call fzf#vim#ag_raw('--color-path 35 ' . <q-args>,
   \                 <bang>0 ? fzf#vim#with_preview('up:60%')
   \                         : fzf#vim#with_preview('right:50%:hidden', '?'),
   \                 <bang>0)
 \ {'options': "--preview 'coderay $(cut -d: -f1 <<< {}) | sed -n $(cut -d: -f2 <<< {}),\\$p | head -".&lines."'"}))
 
 " grep alternative
-if executable('rg')
-  " Use rg over ag
-  set grepprg=rg\ --nogroup\ --nocolor
-  let g:ackprg = 'rg --ignore-file ~/.ignore --vimgrep'
-  nmap K    :let CWORD = expand("<cword>") <CR> :Rg "<C-R>=CWORD<CR>" <CR>
-  autocmd FileType python nmap K :let DIR = getcwd() <CR> :let DIRS = GetPythonPaths(DIR) <CR> :let CWORD = expand("<cword>") <CR> :Rg -t py <C-R>=CWORD<CR> <C-R>=DIRS<CR> <CR>
-  autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> :Rg -t cpp "<C-R>=CWORD<CR>" <CR>
-  " " Indlcude highlighting
-  " nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg "<C-R>=CWORD<CR>" <CR>
-  " autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg -tpy <C-R>=CWORD<CR> <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
-  " autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg --cpp "<C-R>=CWORD<CR>" <CR>
-elseif executable('ag')
+" if executable('rg')
+"   " Use rg over ag
+"   set grepprg=rg\ --nogroup\ --nocolor
+"   let g:ackprg = 'rg --ignore-file ~/.ignore --vimgrep'
+"   nmap K    :let CWORD = expand("<cword>") <CR> :Rg "<C-R>=CWORD<CR>" <CR>
+"   autocmd FileType python nmap K :let DIR = getcwd() <CR> :let DIRS = GetPythonPaths(DIR) <CR> :let CWORD = expand("<cword>") <CR> :Rg -t py <C-R>=CWORD<CR> <C-R>=DIRS<CR> <CR>
+"   autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> :Rg -t cpp "<C-R>=CWORD<CR>" <CR>
+"   " " Indlcude highlighting
+"   " nmap K    :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg "<C-R>=CWORD<CR>" <CR>
+"   " autocmd FileType python nmap K :let DIR = getcwd() <CR> :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg -tpy <C-R>=CWORD<CR> <C-R>=DIR<CR> ~/private/python-tools ~/private/python <CR>
+"   " autocmd FileType cpp nmap K :let CWORD = expand("<cword>") <CR> : let @/ = CWORD <CR> :Rg --cpp "<C-R>=CWORD<CR>" <CR>
+" elseif executable('ag')
+if executable('ag')
   " Use ag over grep
   set grepprg=ag\ --nogroup\ --nocolor
   let g:ackprg = 'ag --path-to-ignore ~/.ignore --vimgrep'
