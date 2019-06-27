@@ -18,6 +18,11 @@ function update-x11-forwarding
 
       fi
     }
+voms-proxy-init () {
+    /usr/bin/voms-proxy-init $@
+    source ~/private/tools/clearlines.sh
+}
+
 export EDITOR=nvim
 setopt CHASE_LINKS
 unset CDPATH
@@ -25,7 +30,6 @@ unset CDPATH
 alias cd='>/dev/null cd'
 alias realvim="\vim"
 alias vim="nvim"
-alias ll="ls -lahtr"
 alias vimpy="vimx --cmd 'let include_pymode=1'"
 alias ag='ag --path-to-ignore ~/.ignore'
 alias rg='~/bin/rg --ignore-file ~/.ignore'
@@ -33,6 +37,8 @@ alias edithistory="vim ~/.zhistory"
 function viag () { vim -c "Ag $*" }
 alias vimag="viag"
 alias gvim="git vim"
+# alias remux="export DISPLAY=\"`tmux show-env | sed -n 's/^DISPLAY=//p'`\""
+
 #### Somehow breaks prompt
 # gvim() {
 #   local files
@@ -48,6 +54,7 @@ tmux_helper(){
 alias pp_test="tmux capture-pane -p -S -3000 > $HOME/step_1.txt; tac $HOME/step_1.txt | grep '.' > $HOME/step_2.txt; cat $HOME/step_2.txt | grep -v ' \\$ ' > $HOME/step_3.txt; cat $HOME/step_3.txt | grep -v ' \\\$\$' > $HOME/step_4.txt; cat $HOME/step_4.txt | grep -v ^' 'nscharmb > $HOME/step_5.txt; cat $HOME/step_5.txt | pe >$HOME/tmux-buffer ; cat -n $HOME/tmux-buffer > $HOME/step_6.txt; cat $HOME/step_6.txt | sort -uk2 > $HOME/step_7.txt; cat $HOME/step_7.txt | sort -nk1 > $HOME/step_8.txt; cat $HOME/step_8.txt | cut -f2- > $HOME/tmux-buffer; cat $HOME/tmux-buffer > $HOME/step_9.txt; cat $HOME/step_9.txt | ag --nobreak --nonumbers --noheading . > $HOME/step_10.txt; cat $HOME/step_10.txt | fzf --height 20% > $HOME/step_11.txt; cat $HOME/step_11.txt | xargs echo -n > $HOME/step_12.txt; cat $HOME/step_12.txt | read a ; tmux_helper"
 # alias pp="tmux capture-pane -p -S -3000 > $HOME/tmux-buffer; tac $HOME/tmux-buffer | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v ^' 'nscharmb | pe >$HOME/tmux-buffer ; cat -n $HOME/tmux-buffer | sort -uk2 | sort -nk1 | cut -f2- > $HOME/tmux-buffer; cat $HOME/tmux-buffer | ag --nobreak --nonumbers --noheading . | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
 alias pp="tmux capture-pane -S -3000 && tmux save-buffer $HOME/tmux-buffer && tac $HOME/tmux-buffer > $HOME/tmux-buffer_rev && cat -n $HOME/tmux-buffer_rev | grep '.' | grep -v ' \\$ ' | grep -v ' \\\$\$' | grep -v '' | sort -uk2 | sort -nk1 | pe | fzf --height 20% | xargs echo -n | read a ; tmux_helper"
+alias timytime="top -i -b -n1 -U nscharmb | grep nscharmb | awk '{split(\$11, t, \":\"); printf \"%-15s %4d:%02d:%02d (hh:mm:ss)\n\", \$12, int(t[1]/60), t[1]%60, t[2] }' | fzf --height 20% "
 
 
 
@@ -59,13 +66,13 @@ setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed
 setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY             # Share history between all sessions.
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
-setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_DUPS          # Don\'t record an entry that was just recorded again.
 setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
 setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
-setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Don't write duplicate entries in the history file.
+setopt HIST_IGNORE_SPACE         # Don\'t record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don\'t write duplicate entries in the history file.
 setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
-setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
+setopt HIST_VERIFY               # Don\'t execute immediately upon history expansion.
 # Find all occurrences of the search query in the history file.
 #
 # (k) turns it an array of line numbers.
@@ -89,11 +96,13 @@ ZSH_COMPDUMP="${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
 export KEYTIMEOUT=10
 
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
+  alias setupTrexFitter="source ~/private/Atlas/Analysis/ttH/TRExFitter/setup.sh"
+  alias setupTTHbbAnalysis="source ~/private/Atlas/Analysis/ttH/setup.sh"
   alias setupPandas="source ~/private/tools/setup/SetupPandas.sh"
   alias setupLatex="source ~/private/tools/setup/SetupLatex.sh"
   alias setupQC="source ~/private/tools/setup/SetupQC.sh"
   alias ls="ls --color=auto"
-  LS_COLORS="di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=30;43:"
+  LS_COLORS="di=1;34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=30;43:"
   export LS_COLORS
   scpp() {
       save_path="macbook:tmp/"
@@ -111,16 +120,25 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
   scpo() {
       save_path="macbook:tmp/"
       file_names=()
+      npdfs=0
       for file in "$@"
       do
           IFS='/' read -A my2array <<< "$file"
           file_names+=("${my2array[@]:(-1)}")
+          if [ "${${my2array[@]:(-1)}##*.}" = "pdf" ]; then
+            npdfs=$((npdfs+1))
+
+          fi
       done
       scp "$@" "$save_path"
       IFS=':' read -A myarray <<< "$save_path"
       echo ${file_names[@]}
       echo ${myarray[2]%$1}
-      ssh macbook "cd ${myarray[2]%$1}; open -g ${file_names[@]};"
+      do_open=true
+
+      if (( npdfs < 3 )); then #Only open the files when not more then 2 pdfs are contained
+        ssh macbook "cd ${myarray[2]%$1}; open -g ${file_names[@]};"
+      fi
   }
   if [ ${HOST:0:6} = "lxplus" ]; then
     alias cdeos="/eos/user/n/nscharmb/"
@@ -175,8 +193,6 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     export HACKFOROLD_AtlasSetup="$AtlasSetup"
     export HACKFOROLD_AtlasSetupSite="$AtlasSetupSite"
     lsetup git
-    alias setupTrexFitter="source ~/private/tools/setup/SetupTrexFitter.sh"
-    alias setupTTHbbAnalysis="source ~/private/tools/setup/SetupTTHbbAnalysis.sh"
   fi
 else
     alias mounthiggs="sshfs -o allow_other,defer_permissions nico@higgs.hep.manchester.ac.uk: mount/"
@@ -184,7 +200,8 @@ else
     alias mounteve="sshfs -o allow_other,defer_permissions nscharmb@eve.e5.physik.tu-dortmund.de: mount/"
     # alias vim="~/./nvim-osx64/bin/nvim"
     alias ls="ls -G"
-    LSCOLORS="exfxcxdxbxegedabagacad"
+    LSCOLORS="exgxbxdxcxegedxbxgxcxd"
+
     export LSCOLORS
 fi
 
@@ -251,21 +268,6 @@ function color_test {
   done
   echo
 }
-# fzf + ag configuration
-if _has fzf && _has rg; then
-  export FZF_DEFAULT_COMMAND='rg --hidden --ignore-file ~/.ignore --nocolor -f -g ""'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-elif _has fzf && _has ag; then
-  export FZF_DEFAULT_COMMAND='ag --hidden --path-to-ignore ~/.ignore --nocolor -f -g ""'
-  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
-fi
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-}
 set -o vi
 source "${ZDOTDIR:-$SECONDHOME}/.zprezto/init.zsh"
 eval "$(fasd --init auto)"
@@ -284,13 +286,39 @@ fi
 zstyle ':completion:*' users
 unsetopt CORRECT 
 setopt clobber
+bindkey -M viins '^R' history-incremental-search-backward
+bindkey -M vicmd '^R' history-incremental-search-backward
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# fzf + fd, rg, ag configuration
+export FZF_COMPLETION_TRIGGER=''
+bindkey '^T' fzf-completion
+bindkey '^I' $fzf_default_completion
+if _has fzf && _has fd; then
+  export FZF_DEFAULT_COMMAND='fd --type f --color=never'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND='fd --type d . --color=never'
+elif _has fzf && _has rg; then
+  export FZF_DEFAULT_COMMAND="rg --files --no-ignore --hidden --glob '!.git/*'"
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+elif _has fzf && _has ag; then
+  export FZF_DEFAULT_COMMAND='ag --hidden --nocolor -f -g ""'
+  # Ag doesnt find hidden files at the moment (maybe)
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
 
 bindkey -a '^[[3~' delete-char
 bindkey '^[[3~' delete-char
-# bindkey -M viins '^R' history-incremental-search-backward
-bindkey -M vicmd '^R' history-incremental-search-backward
 # bindkey -M vicmd 'v' edit-command-line
 bindkey -M vicmd '^V' edit-command-line
 bindkey -M vicmd 'v' vi-cmd-mode
 bindkey jk vi-cmd-mode
+alias ll="ls -lahtr"
+# fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
+unalias z
+
+z() {
+  local dir
+  dir="$(fasd -Rdl "$1" | fzf --height 20% -1 -0 --no-sort +m)" && cd "${dir}" || return 1
+}
