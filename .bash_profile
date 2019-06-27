@@ -10,6 +10,7 @@ if [ -f "/pc2014-data2/nico/bin/zsh" ]; then
     if [ $? -eq 0 ]; then
         exit
     fi
+fi
 
 if [ -f "$HOME/local/bin/zsh" ]; then
     export SHELL=~/local/bin/zsh
@@ -48,7 +49,7 @@ fi
 if [ -z ${HOST+x} ]; then export HOST=$HOSTNAME; fi
 export PATH="$HOME/bin:$PATH"
 if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
-    export PATH="$HOME/neovim/bin:$PATH"
+    # export PATH="$HOME/neovim/bin:$PATH"
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
     export RUCIO_ACCOUNT="nscharmb"
     if [ ${HOST:0:6} = "lxplus" ]; then
