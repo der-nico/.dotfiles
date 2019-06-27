@@ -1,0 +1,33 @@
+###########################
+#### zsh and bash comands
+###########################
+
+###########################
+#### Example: get filenames from configs change them and then put in file as list 
+###########################
+rg -l "has samples set up that do not exist" job.1591*.err | sed 's/err/out/g' | xargs cat | grep nice | awk -F "_" '{print $NF}' > ~/rerun_list.txt
+
+# Find files conatining string "AAA"
+rg -l "AAA" files*
+
+# Replace parts of string
+sed 's/err/out/g'
+
+# Pass pipe output to cat
+xargs cat
+
+# Print only some parts of grepped line
+awk '{print $3}'        # Print third element
+awk -F "_" '{print $3}' # Use none default separator
+awk '{print $NF}'       # NF is number of elements $NF is last element
+
+
+##########################
+#### Example: Sort files ls out put by  specifc part of filename
+###########################
+ls -l NewRegions/Dec_all/Histograms/ | awk -F '_' '{ $0=$NF " " $0;print $0}' | sort -nk1 | awk -F ' ' '{printf("%45s\n", $NF)}'
+
+awk -F '_'                             # use delimiter '_' instead of ' '
+'awk -F '_' { $0=$NF " " $0;print $0}' # Append the last part to the beginning of the string (here it was a ending like _number.postfix)
+sort -nk1                              # Sort numerically by first element
+awk -F ' ' '{printf("%45s\n", $NF)}'   # set delimiter back to ' ' and print last element (filename) and format it right aligned (to have the numbers aligned)
