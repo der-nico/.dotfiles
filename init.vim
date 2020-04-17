@@ -1,5 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+filetype plugin on
 set guioptions=M
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.fzf
@@ -124,6 +125,8 @@ inoremap jk <ESC>
 set backspace=eol,start,indent
 " Set utf8 as standard encoding and en_US as the standard language
 set encoding=utf8
+" set spelllang=de
+set spelllang=en_gb,de
 " Use Unix as the standard file type
 set ffs=unix,mac,dos
 set mouse=a
@@ -140,6 +143,9 @@ set magic
 command Form execute "normal gaii*d"
 set scrolloff=3
 set complete+=kspell
+ let g:tex_flavor = "latex"
+
+autocmd BufNewFile,BufRead *.tex set syntax=tex
 autocmd FileType tex setlocal spell
 autocmd BufNewFile,BufRead *.xrsl set syntax=config
 set wildmenu
@@ -577,3 +583,26 @@ if executable('ag')
 endif
 
 nnoremap <silent> cr :<C-U><C-R><C-R>='let @' . v:register . ' = ' . string(getreg())<CR><C-F><Left>
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_compiler_latexmk = {
+    \ 'options' : [
+    \   '-lualatex',
+    \   '-interaction=nonstopmode',
+    \ ],
+    \ 'build_dir' : 'livepreview',
+\}
+
+noremap <leader>ll :VimtexCompile<cr>
+
+function! Osc52Yank()
+    let buffer=system('base64 -w0', @0)
+    let buffer=substitute(buffer, "\n$", "", "")
+    let buffer='\e]52;c;'.buffer.'\x07'
+    silent exe "!echo -ne ".shellescape(buffer)." > ".shellescape($TTY)
+endfunction
+command! Osc52CopyYank call Osc52Yank()
+augroup Example
+    autocmd!
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call Osc52Yank() | endif
+  augroup END
+

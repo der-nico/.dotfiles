@@ -30,6 +30,7 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     fi
 else
     export SECONDHOME=$HOME
+    export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"
     export PATH="$HOME/anaconda3/bin:$PATH"
     export ConndaPYTHONPATHMAIN="$HOME/anaconda3/bin/python"
     export ConndaPYTHON3PATH="$HOME/anaconda3/envs/neovim3/bin/python"
