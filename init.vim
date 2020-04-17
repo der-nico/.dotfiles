@@ -15,7 +15,6 @@ if dein#load_state('~/.cache/dein')
  call dein#begin('~/.cache/dein')
 
  call dein#add('~/.cache/dein')
- call dein#add('tommcdo/vim-express')
  call dein#add('tpope/vim-commentary', {'on_map': {'n' : ['gc']}})
  call dein#add('tpope/vim-fugitive', { 'on_cmd': [ 'Git', 'Gstatus', 'Gwrite', 'Glog', 'Gcommit', 'Gblame', 'Ggrep', 'Gdiff', ], })
  " call dein#add('tpope/vim-fugitive', { 'on_cmd': 'Gdiff'})
@@ -65,15 +64,18 @@ if dein#load_state('~/.cache/dein')
  call dein#add('mbbill/undotree', {'on_cmd': ['UndotreeToggle']})
  call dein#add('chrisbra/Recover.vim')
  call dein#add('chrisbra/NrrwRgn')
+ call dein#add('lervag/vimtex')
+ call dein#add('yuttie/comfortable-motion.vim')
+
 " Plugin 'vim-syntastic/syntastic'
 " Plugin 'tell-k/vim-autopep8'
 " Plugin 'nvie/vim-flake8'
- call dein#add('airblade/vim-rooter')
- call dein#add('vim-airline/vim-airline')
- call dein#add('vim-airline/vim-airline-themes')
+   call dein#add('airblade/vim-rooter')
+   call dein#add('vim-airline/vim-airline')
+   call dein#add('vim-airline/vim-airline-themes')
 
- call dein#end()
- call dein#save_state()
+   call dein#end()
+   call dein#save_state()
 endif
 
 " " Lazy load helper for fugitive
@@ -381,9 +383,12 @@ set splitright
 """""""""""""""""""
 "   GoAppend
 """""""""""""""""""
-nnoremap <silent> <Plug>GoAppend :set opfunc=<SID>SpecialChange<CR>g@
-silent! call repeat#set("\<Plug>GoAppend", v:val)
-function! s:SpecialChange(type, ...) abort
+" nnoremap <silent> <Plug>(GoAppend) :set opfunc=<SID>SpecialChange<CR>g@
+nnoremap <silent> <Plug>(GoAppend) :set opfunc=<SID>SpecialChange<CR>:silent! call repeat#set("\<Plug>GoAppend", v:count)<CR>g@
+" nnoremap <silent> <Plug>(GoAppend) :set opfunc=<SID>SpecialChange<CR>g@:silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)<CR>
+nmap  <silent> gw :set opfunc=<SID>SpecialChange<CR>g@
+" silent! call repeat#set("\<Plug>GoAppend", v:val)
+function! s:SpecialChange(type,...) abort
     silent exec 'normal! `]'
     while getline('.')[col('.')-1] == ' '
             silent exec 'normal! h'
@@ -396,6 +401,28 @@ function! s:SpecialChange(type, ...) abort
     endif
 endfunction
 nmap gq <Plug>(GoAppend)
+
+" " replace text with unnamed register (in all modes)
+"                 function! ReplaceWithUnamed(type)
+"                         let paste_save=&paste
+"                         let &paste=1
+"                         if a:type == 'line'
+"                           silent exe "normal! '[V']"
+"                         elseif a:type == 'block'
+"                           silent exe "normal! `[\<C-V>`]"
+"                         elseif a:type == 'char'
+"                           silent exe "normal! `[v`]"
+"                         else
+"                           silent exe "normal! `<" . a:type . "`>"
+"                         endif
+"                         " startinsert  " `i`
+" 						" call feedkeys('A')
+"                         " silent exe "normal! \"_c\<C-R>""\<ESC>"
+"                         " let &paste=paste_save 
+"                 endfunction
+"                 nmap <silent> S :set opfunc=ReplaceWithUnamed<CR>g@
+"                 vmap <silent> S :<C-U>call ReplaceWithUnamed(visualmode())<CR>
+
 
 """""""""""""""""""
 "   Switch cases
@@ -532,6 +559,14 @@ endfunction
 
 command TEST execute "Nr_return()"
 
+function! FzfSpellSink(word)
+  exe 'normal! "_ciw'.a:word
+endfunction
+function! FzfSpell()
+  let suggestions = spellsuggest(expand("<cword>"))
+  return fzf#run({'source': suggestions, 'sink': function("FzfSpellSink"), 'down': 10 })
+endfunction
+nnoremap z= :call FzfSpell()<CR>
 
 command! -bang -nargs=+ -complete=dir Rg
   \ call fzf#vim#grep(

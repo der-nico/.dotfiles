@@ -31,7 +31,7 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
         export PATHCOLOR="135"        # manchester
     fi
 else
-    export PATH="$HOME/nvim-osx64/bin:$PATH"
+    export SECONDHOME=$HOME
     export PATH="$HOME/anaconda3/bin:$PATH"
     export ConndaPYTHONPATHMAIN="$HOME/anaconda3/bin/python"
     export ConndaPYTHON3PATH="$HOME/anaconda3/envs/neovim3/bin/python"
