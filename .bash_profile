@@ -10,9 +10,7 @@ if [ -f "/pc2014-data2/nico/bin/zsh" ]; then
     if [ $? -eq 0 ]; then
         exit
     fi
-fi
-
-if [ -f "$HOME/local/bin/zsh" ]; then
+elif [ -f "$HOME/local/bin/zsh" ]; then
     export SHELL=~/local/bin/zsh
     if [ -f ~/.zprofile ]; then
         . ~/.zprofile
@@ -21,9 +19,8 @@ if [ -f "$HOME/local/bin/zsh" ]; then
     if [ $? -eq 0 ]; then
         exit
     fi
-fi
 
-if [ -f "$HOME/bin/zsh-5.4.2" ]; then
+elif [ -f "$HOME/bin/zsh-5.4.2" ]; then
     export SHELL=~/bin/zsh-5.4.2
     if [ -f ~/.zprofile ]; then
         . ~/.zprofile
@@ -33,8 +30,7 @@ if [ -f "$HOME/bin/zsh-5.4.2" ]; then
     if [ $? -eq 0 ]; then
         exit
     fi
-fi
-if [ -f "$HOME/bin/zsh-5.5.1" ]; then
+elif [ -f "$HOME/bin/zsh-5.5.1" ]; then
     export SHELL=~/bin/zsh-5.5.1
     if [ -f ~/.zprofile ]; then
         . ~/.zprofile
