@@ -11,9 +11,11 @@ if [ ${HOST:0:6} = "lxplus" ] || [ ${HOST:0:4} = "pc20" ]; then
     export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$HOME/lib"
     export RUCIO_ACCOUNT="nscharmb"
     if [ ${HOST:0:6} = "lxplus" ]; then
-        export SECONDHOME=$HOME
+        export SECONDHOME="/afs/cern.ch/work/n/nscharmb"
         # set TEX directory for lxplus
-        export PATH="/afs/cern.ch/sw/XML/texlive/2016/bin/x86_64-linux:$PATH"
+        if [ ${HOST:0:7} = "lxplus6" ]; then
+            export PATH="/afs/cern.ch/work/n/nscharmb/slc6/neovim/bin/:$PATH"
+        fi
         # export PATH=$HOME/private/installed_software/git/bin/:$PATH
         export ConndaPYTHONPATHMAIN="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/ring_tools/bin/python"
         export ConndaPYTHON3PATH="/afs/cern.ch/work/n/nscharmb/anaconda3/envs/neovim3/bin/python"

@@ -17,7 +17,8 @@ if dein#load_state('~/.cache/dein')
  call dein#add('~/.cache/dein')
  call dein#add('tommcdo/vim-express')
  call dein#add('tpope/vim-commentary', {'on_map': {'n' : ['gc']}})
- call dein#add('tpope/vim-fugitive', { 'on_cmd': [ 'Git', 'Gstatus', 'Gwrite', 'Glog', 'Gcommit', 'Gblame', 'Ggrep', 'Gdiff', ] })
+ call dein#add('tpope/vim-fugitive', { 'on_cmd': [ 'Git', 'Gstatus', 'Gwrite', 'Glog', 'Gcommit', 'Gblame', 'Ggrep', 'Gdiff', ], })
+ " call dein#add('tpope/vim-fugitive', { 'on_cmd': 'Gdiff'})
  call dein#add('tpope/vim-surround', {'on_map': {'n' : ['cs', 'ds', 'ys'], 'x' : 'S'}, 'depends' : 'vim-repeat'})
  call dein#add('tpope/vim-unimpaired')
  call dein#add('tpope/vim-sleuth')
@@ -74,6 +75,24 @@ if dein#load_state('~/.cache/dein')
  call dein#end()
  call dein#save_state()
 endif
+
+" " Lazy load helper for fugitive
+" command! Gstatus call LazyLoadFugitive('Gstatus')
+" command! Gdiff call LazyLoadFugitive('Gdiff')
+" command! Glog call LazyLoadFugitive('Glog')
+" command! Gblame call LazyLoadFugitive('Gblame')
+" command! Git call LazyLoadFugitive('Git')
+" command! Gwrite call LazyLoadFugitive('Gwrite')
+" command! Gcommit call LazyLoadFugitive('Gcommit')
+" command! Ggrep call LazyLoadFugitive('Ggrep')
+
+
+" function! LazyLoadFugitive(cmd)
+"   call plug#load('vim-fugitive')
+"   call fugitive#detect(expand('%:p'))
+"   exe a:cmd
+" endfunction
+
 
 filetype plugin indent on
 syntax enable
@@ -252,7 +271,10 @@ highlight Search ctermbg=green ctermfg=Black
 highlight Identifier cterm=none
 highlight Comment ctermfg=DarkGrey
 highlight ColorColumn ctermbg=DarkRed ctermfg=Black
-autocmd FileType python call matchadd('ColorColumn', '\%80v', 100)
+highlight ColorColumn2 ctermbg=Red ctermfg=Black
+autocmd FileType python call matchadd('ColorColumn', '\%80v.', 100)
+autocmd FileType python call matchadd('ColorColumn2', '\%120v.', 100)
+
 let g:python_highlight_all = 1
 set noshowmode
 
@@ -342,6 +364,11 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+" nnoremap <C-J> <C-w>-
+" nnoremap <C-K> <C-w>+
+" nnoremap <C-H> <C-w><
+" nnoremap <C-L> <C-w>>
 set splitbelow
 set splitright
 
@@ -542,3 +569,81 @@ if executable('ag')
 endif
 
 nnoremap <silent> cr :<C-U><C-R><C-R>='let @' . v:register . ' = ' . string(getreg())<CR><C-F><Left>
+
+function! SearchWithSkip(pattern, flags, stopline, timeout, skip)
+"
+" Returns true if a match is found for {pattern}, but ignores matches
+" where {skip} evaluates to false. This allows you to do nifty things
+" like, say, only matching outside comments, only on odd-numbered lines,
+" or whatever else you like.
+"
+" Mimics the built-in search() function, but adds a {skip} expression
+" like that available in searchpair() and searchpairpos().
+" (See the Vim help on search() for details of the other parameters.)
+" 
+    " Note the current position, so that if there are no unskipped
+    " matches, the cursor can be restored to this location.
+    "
+    let l:matchpos = getpos('.')
+
+    " Loop as long as {pattern} continues to be found.
+    "
+    let l:guard = []
+    while search(a:pattern, a:flags, a:stopline, a:timeout) > 0
+        if l:guard == [] | let l:guard = getpos('.') | elseif l:guard == getpos('.') | break | endif
+
+        " If {skip} is true, ignore this match and continue searching.
+        "
+        if eval(a:skip)
+            continue
+        endif
+
+        " If we get here, {pattern} was found and {skip} is false,
+        " so this is a match we don't want to ignore. Update the
+        " match position and stop searching.
+        " 
+        let l:matchpos = getpos('.')
+        break
+
+    endwhile
+
+    " Jump to the position of the unskipped match, or to the original
+    " position if there wasn't one.
+    "
+    call setpos('.', l:matchpos)
+
+endfunction
+function! SearchOutside(synName, pattern)
+"
+" Searches for the specified pattern, but skips matches that
+" exist within the specified syntax region.
+"
+    call SearchWithSkip(a:pattern, '', '', '',
+        \ 'synIDattr(synID(line("."), col("."), 0), "name") =~? "' . a:synName . '"' )
+
+endfunction
+
+
+function! SearchInside(synName, pattern)
+"
+" Searches for the specified pattern, but skips matches that don't
+" exist within the specified syntax region.
+"
+    call SearchWithSkip(a:pattern, '', '', '',
+        \ 'synIDattr(synID(line("."), col("."), 0), "name") !~? "' . a:synName . '"' )
+
+endfunction
+command! -nargs=+ -complete=command SearchOutside call SearchOutside(<f-args>)
+command! -nargs=+ -complete=command SearchInside  call SearchInside(<f-args>)
+
+function! Osc52Yank()
+    let buffer=system('base64 -w0', @0)
+    let buffer=substitute(buffer, "\n$", "", "")
+    let buffer='\e]52;c;'.buffer.'\x07'
+    silent exe "!echo -ne ".shellescape(buffer)." > ".shellescape($SSH_TTY)
+endfunction
+command! Osc52CopyYank call Osc52Yank()
+augroup Example
+    autocmd!
+    autocmd TextYankPost * if v:event.operator ==# 'y' | call Osc52Yank() | endif
+  augroup END
